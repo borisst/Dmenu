@@ -25,9 +25,11 @@ class ProductController extends Controller
     {
         $product = Product::create([
             'name' => request('name'),
-            'email' => request('email'),
-            'role' => request('role'),
-            'password' => request('password')
+            'price' => request('price'),
+            'category' => request('category'),
+            'weight' => request('weight'),
+            'description' => request('description'),
+            'image' => request('image')
         ]);
         $product->save();
         return redirect()->back();
