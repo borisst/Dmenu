@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+
+    //TODO add authorization
     /**
      * lists all companies
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -15,6 +17,13 @@ class CompanyController extends Controller
     {
         return view('companies.index', [
             'companies' => Company::all()
+        ]);
+    }
+
+    public function show(Company $company)
+    {
+        return view('companies.show', [
+            'company' => $company
         ]);
     }
 
