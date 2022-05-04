@@ -15,6 +15,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
+
         return view('companies.index', [
             'companies' => Company::all()
         ]);
@@ -46,9 +47,9 @@ class CompanyController extends Controller
 
         try {
             $user->companies()->create($attributes);
-            return redirect(route('UPDATE'))->with('message', ['text' => 'Компанијата е успешно додадена', 'type' => 'success']);
+            return redirect(route('companies-index'))->with('message', ['text' => 'Компанијата е успешно додадена', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('UPDATE'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
+            return redirect(route('companies-index'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
         }
 
     }
@@ -75,9 +76,9 @@ class CompanyController extends Controller
 
         try {
             $company->update($attributes);
-            return redirect(route('UPDATE'))->with('message', ['text' => 'Името е успешно променето!', 'type' => 'success']);
+            return redirect(route('company-show', $company))->with('message', ['text' => 'Името е успешно променето!', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('UPDATE'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
+            return redirect(route('company-show', $company))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
         }
 
     }
@@ -99,9 +100,9 @@ class CompanyController extends Controller
 
         try {
             $company->delete();
-            return redirect(route('UPDATE'))->with('message', ['text' => 'Компанијата е успешно променета!', 'type' => 'success']);
+            return redirect(route('companies-index'))->with('message', ['text' => 'Компанијата е успешно променета!', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('UPDATE'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
+            return redirect(route('companies-index'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
         }
 
     }
