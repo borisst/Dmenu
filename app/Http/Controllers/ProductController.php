@@ -47,6 +47,8 @@ class ProductController extends Controller
         return view('products.edit', compact('product'));
     }
 
+    //TODO. When trying to update an image it fails and fills the column with NULL.
+    //TODO  p.s. When creating works perfectly fine.
 
     public function update(ProductRequest $request, Product $product)
     {
