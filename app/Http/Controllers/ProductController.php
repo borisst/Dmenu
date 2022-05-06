@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,7 @@ class ProductController extends Controller
     }
 
 
-    public function store(StoreProductRequest $request)
+    public function store(ProductRequest $request)
     {
         $product = Product::create([
             'name' => request('name'),
@@ -29,12 +30,11 @@ class ProductController extends Controller
             'category' => request('category'),
             'weight' => request('weight'),
             'description' => request('description'),
-            'image' => request('image')
+            'image' => Product::getImage()
         ]);
         $product->save();
         return redirect()->back();
     }
-
 
     public function show(Product $product)
     {
@@ -48,7 +48,7 @@ class ProductController extends Controller
     }
 
 
-    public function update(StoreProductRequest $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
         $product->update([
             'name' => request('name'),
@@ -56,7 +56,7 @@ class ProductController extends Controller
             'category' => request('category'),
             'weight' => request('weight'),
             'description' => request('description'),
-            'image' => request('image')
+            'image' => Product::getImage()
         ]);
         $product->save();
         return redirect()->back();
@@ -68,4 +68,5 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->back();
     }
+
 }

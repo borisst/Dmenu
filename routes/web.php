@@ -7,10 +7,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('products/index', [ProductController::class, 'index']);
-Route::get('products/create', [ProductController::class, 'create']);
-Route::post('products/store', [ProductController::class, 'store']);
-Route::get('product/{product}', [ProductController::class, 'show']);
-Route::get('products/{product}/edit', [ProductController::class, 'edit']);
-Route::patch('products/{product}/update', [ProductController::class, 'update']);
-Route::delete('products/{products}/delete', [ProductController::class, 'destroy']);
+Route::get('products', [ProductController::class, 'index']);
+Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('products', [ProductController::class, 'store'])->name('products.store');
+Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::patch('products/{product}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('products.delete');
