@@ -9,6 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
+
     protected $guarded = [];
 
     public static function getImage()
@@ -20,5 +21,9 @@ class Product extends Model
             $file->move('images', $fileName);
             return $fileName;
         }
+      
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class, 'menus', 'product_id', 'company_id')->withTimestamps();
     }
 }
