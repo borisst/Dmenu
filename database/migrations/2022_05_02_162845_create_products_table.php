@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('weight')->nullable();
             $table->string('description')->nullable();
             $table->binary('image')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

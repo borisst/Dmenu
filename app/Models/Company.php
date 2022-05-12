@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Company extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     /**
      * The attributes that are not mass assignable.
@@ -22,6 +25,18 @@ class Company extends Model
 
     public function menus()
     {
-        return $this->belongsToMany(Product::class, 'menus', 'company_id', 'product_id')->withTimestamps();
+        return $this->hasMany(Menu::class, 'company_id');
+    }
+
+
+    /**
+     * Return only user-created companies
+     * @param $query
+     * @return mixed
+     */
+    public function scopeOwned($query)
+    {
+        return $query->whereOwner(Auth::id());
+
     }
 }
