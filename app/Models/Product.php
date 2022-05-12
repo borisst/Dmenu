@@ -12,9 +12,22 @@ class Product extends Model
     use HasFactory;
     use SoftDeletes;
 
-    /**
+
+    protected $guarded = [];
+
+    public static function getImage()
+    {
+        if (request()->hasFile('image')) {
+            $file = request()->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $file->move('images', $fileName);
+            return $fileName;
+        }
+      
+     /**
      *
-     * Retrieves only active records, use companiesWithTrashed() to include soft deleted records
+     * Retrieves only active records, use menusWithTrashed() to include soft deleted records
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -32,9 +45,9 @@ class Product extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function companiesWithTrashed()
+    public function menusWithTrashed()
     {
-        return $this->belongsToMany(Company::class, 'menu_product', 'product_id', 'menu_id')
+        return $this->belongsToMany(Menu::class, 'menu_product', 'product_id', 'menu_id')
             ->withTimestamps()
             ->withPivot(['deleted_at']);
     }
