@@ -10,13 +10,15 @@
 <body>
 <a href="{{route('products.create')}}">Add a new product</a> <br>
 
+@if(session()->has('success'))
+    {{session('success')}}
+@endif
+
 @foreach($products as $product)
 
     <h1><a href="{{route('products.show',$product->id)}}">{{$product->name}}</a> <br></h1>
 
     <img class="rounded-t-lg" src="{{asset('../images/' . $product->image)}}" alt=""/>
-
-
     <a href="{{route('products.edit',$product->id)}}">Edit</a> <br>
     <form action="{{route('products.delete',$product->id)}}" method="POST">
         @csrf

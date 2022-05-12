@@ -25,7 +25,6 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'price' => 'required',
             'category' => 'required',
             'weight' => 'required',
             'description' => 'required',
