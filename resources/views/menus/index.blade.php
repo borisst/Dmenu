@@ -2,7 +2,7 @@
     {{$company->name}}
 @endforeach
 {{--@dd($companies)--}}
-{{--@dd($menus)--}}
+fi@dd($menus)
 
 @foreach($menus as $menu)
     {{--@dd($menu)--}}

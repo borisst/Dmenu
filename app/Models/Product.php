@@ -26,6 +26,14 @@ class Product extends Model
         }
     }
 
+    /**
+     *
+     * Retrieves only active records, use menusWithTrashed() to include soft deleted records
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+
+
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'menu_product', 'product_id', 'menu_id')

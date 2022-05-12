@@ -19,7 +19,7 @@ class MenuFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'company_id' => Company::factory()
+            'company_id' => Company::all()->random()->id
         ];
     }
 }

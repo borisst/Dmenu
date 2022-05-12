@@ -19,7 +19,7 @@ class CompanyFactory extends Factory
     {
         return [
             'name' => $this->faker->company,
-            'owner' => User::factory()
+            'owner' => User::all()->random()->id
         ];
     }
 }
