@@ -15,9 +15,6 @@
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="name"><br>
 
-    <label for="price">Price</label><br>
-    <input type="text" id="price" name="price"><br>
-
     <label for="category">Category</label><br>
     <input type="text" id="category" name="category"><br>
 
@@ -31,6 +28,13 @@
     <input type="file" name="image"> <br>
 
     <input type="submit">
+
+    @if(session()->has('success'))
+        <p>{{ session('success') }}</p>
+    @endif
+    @if(session()->has('error'))
+        <p>{{ session('error') }}</p>
+    @endif
 </form>
 </body>
 </html>
