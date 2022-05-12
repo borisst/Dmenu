@@ -22,9 +22,8 @@ class Product extends Model
             $extension = $file->getClientOriginalExtension();
             $fileName = time() . '.' . $extension;
             $file->move('images', $fileName);
+            return $fileName;
         }
-
-        return $fileName;
     }
 
     /**
@@ -33,6 +32,8 @@ class Product extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
+
+
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'menu_product', 'product_id', 'menu_id')

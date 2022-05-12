@@ -34,7 +34,7 @@ class ProductController extends Controller
             'image' => Product::getImage()
         ]);
         $product->save();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Product inserted successfully');
     }
 
     public function show(Product $product)
@@ -48,8 +48,7 @@ class ProductController extends Controller
         return view('products.edit', compact('product'));
     }
 
-    //TODO. When trying to update an image it fails and fills the column with NULL.
-    //TODO  p.s. When creating works perfectly fine.
+
 
     public function update(ProductRequest $request, Product $product)
     {
