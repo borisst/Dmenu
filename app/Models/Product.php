@@ -15,7 +15,7 @@ class Product extends Model
 
     protected $guarded = [];
 
-    public static function getImage()
+    public function getImage()
     {
         if (request()->hasFile('image')) {
             $file = request()->file('image');
@@ -24,13 +24,9 @@ class Product extends Model
             $file->move('images', $fileName);
             return $fileName;
         }
-      
-     /**
-     *
-     * Retrieves only active records, use menusWithTrashed() to include soft deleted records
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
+
+    }
+
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'menu_product', 'product_id', 'menu_id')
