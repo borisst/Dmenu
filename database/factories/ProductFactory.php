@@ -22,6 +22,7 @@ class ProductFactory extends Factory
             'category' => $this->faker->randomElement(['food', 'drink', 'dessert', 'stuff']),
             'weight' => $this->faker->numberBetween(1, 20),
             'description' => $this->faker->sentence,
+            'image' => $this->faker->imageUrl($width = 200, $height = 120),
             'company_id' => Company::all()->random()->id
         ];
     }
