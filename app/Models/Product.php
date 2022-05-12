@@ -12,7 +12,7 @@ class Product extends Model
 
     protected $guarded = [];
 
-    public static function getImage()
+    public function getImage()
     {
         if (request()->hasFile('image')) {
             $file = request()->file('image');

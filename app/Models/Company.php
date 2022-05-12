@@ -22,7 +22,6 @@ class Company extends Model
 
     public function menus()
     {
-        return$this->belongsToMany(Product::class, 'menus', 'company_id', 'product_id')->withTimestamps();
+        return $this->belongsToMany(Product::class, 'menus', 'company_id', 'product_id')->withTimestamps();
     }
-
 }
