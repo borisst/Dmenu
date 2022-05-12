@@ -15,7 +15,7 @@ class Product extends Model
 
     protected $guarded = [];
 
-    public function getImage()
+    public static function getImage()
     {
         if (request()->hasFile('image')) {
             $file = request()->file('image');
@@ -24,7 +24,6 @@ class Product extends Model
             $file->move('images', $fileName);
             return $fileName;
         }
-
     }
 
     public function menus()
