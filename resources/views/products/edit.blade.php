@@ -10,7 +10,7 @@
 <body>
 <h1>Edit product</h1>
 
-<form action="{{route('products.update',$product->id)}}" method="POST">
+<form action="{{route('products.update',$product->id)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
     <label for="name">Name:</label><br>
