@@ -22,10 +22,12 @@ class Product extends Model
             $extension = $file->getClientOriginalExtension();
             $fileName = time() . '.' . $extension;
             $file->move('images', $fileName);
-            return $fileName;
         }
-      
-     /**
+
+        return $fileName;
+    }
+
+    /**
      *
      * Retrieves only active records, use menusWithTrashed() to include soft deleted records
      *

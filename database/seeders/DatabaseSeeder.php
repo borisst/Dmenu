@@ -18,12 +18,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::factory(2)
-             ->has(Company::factory()->count(1))
-             ->create();
 
-         Product::factory()->has(Company::factory());
 
-         Menu::factory(2)->hasAttached(Product::factory()->count(4), ['price' => 300, 'user_id' => 1])->create();
+        User::factory()->has(Company::factory()
+            ->has(Menu::factory(2)
+                ->hasAttached(Product::factory(5), ['price' => 300, 'user_id' => 1])))->create([
+            'name' => 'DAdmin',
+            'email' => 'dadmin@dmenu.com',
+            'password' => '$2y$10$u0wW68AVOLQ4s11wAGSBCOpo6ypQ52Lv1SG7a1iQII7DW4HQrnYaq', // 12345678
+            'role' => 'admin',
+
+
+        ]);
+
+
+        User::factory(3)
+            ->has(Company::factory()
+                ->has(Menu::factory(2)
+                    ->hasAttached(Product::factory(5), ['price' => 300, 'user_id' => 1])))
+            ->create();
     }
 }
