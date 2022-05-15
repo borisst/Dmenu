@@ -49,6 +49,10 @@ class Menu extends Model
 
     }
 
+    public function scopeProductsCount($query)
+    {
+        return $query->withCount('products');
+    }
 
     /**
      *
@@ -62,7 +66,8 @@ class Menu extends Model
             ->whereNull('menu_product.deleted_at')
             ->wherePivot('user_id', Auth::id())
             ->withTimestamps()
-            ->withPivot(['deleted_at', 'user_id']);
+            ->withPivot(['deleted_at', 'user_id'])
+            ->orderBy('category');
 
     }
 
@@ -82,7 +87,7 @@ class Menu extends Model
 
     public function company()
     {
-        return $this->belongsTo(Company::class, 'company_id');
+        return $this->belongsTo(Company::class);
     }
 
 }
