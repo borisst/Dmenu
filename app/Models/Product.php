@@ -32,8 +32,6 @@ class Product extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-
-
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'menu_product', 'product_id', 'menu_id')
@@ -62,6 +60,6 @@ class Product extends Model
      */
     public function scopeOwned($query)
     {
-        return $query->whereUserId(Auth::id());
+        return $query->company()->whereRelation('owner', 'owner', Auth::id());
     }
 }

@@ -9,15 +9,14 @@
 </head>
 <body>
 <h1>Edit product</h1>
-
+    @if(session()->has('success'))
+        {{session('success')}}
+    @endif
 <form action="{{route('products.update',$product->id)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="name" value="{{$product->name}}"><br>
-
-    <label for="price">Price</label><br>
-    <input type="text" id="price" name="price" value="{{$product->price}}"><br>
 
     <label for="category">Category</label><br>
     <input type="text" id="category" name="category" value="{{$product->category}}"><br>

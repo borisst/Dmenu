@@ -25,7 +25,7 @@ class Company extends Model
 
     public function menus()
     {
-        return $this->hasMany(Menu::class, 'company_id');
+        return $this->hasMany(Menu::class);
     }
 
 
