@@ -14,7 +14,6 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('price');
             $table->dropConstrainedForeignId('user_id');
             $table->foreignId('company_id')->references('id')->on('companies');
         });
