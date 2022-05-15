@@ -21,8 +21,7 @@ class MenuController extends Controller
     public function index()
     {
         return view('menus.index', [
-            'companies' => Company::owned()->select('id', 'name')->get(),
-            'menus' => Menu::owned()->with('products:id,name,category,weight,description,image')->get()
+            'menus' => Menu::owned()->productsCount()->with('company:id,name')->get()
 //
         ]);
     }
@@ -40,20 +39,16 @@ class MenuController extends Controller
         }
 
         return view('menus.show', [
-            'menu' => Menu::owned()->with('products:id,name,category,weight,description,image')->get()
+            'menu' => $menu,
+            'products' => $menu->products()->withPivot('price')->get()
 
         ]);
     }
 
-    public function create(Company $company)
+    public function create()
     {
-        if (Auth::id() != $company->owner) {
-            abort(403, 'Choose another company');
-        }
-
         return view('menus.create', [
-            'company' => $company,
-            'products' => Product::owned()->get()
+            'companies' => Company::owned()->get()
         ]);
     }
 
@@ -61,35 +56,35 @@ class MenuController extends Controller
      * Stores a new Menu
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Company $company)
+    public function store()
     {
-        if (Auth::id() != $company->owner) {
-            abort(403, 'Choose another company');
+        if (!auth()->hasUser()) {
+            abort(403, 'Forbidden');
         }
-
-        $products = request()->product;
-
-        $name = request()->validate([
-            'name' => 'required'
+        $attributes = request()->validate([
+            'name' => 'required',
+            'company_id' => 'required'
         ]);
 
         try {
-            $company->products()->attach($products, ['name' => $name, 'user_id' => Auth::id()]);
-            return redirect(route('companies-index'))->with('message', ['text' => 'The menu has been created', 'type' => 'success']);
+            $menu = Menu::create($attributes);
+            return redirect(route('menus'))->with('message', ['text' => 'The menu has been created', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('companies-index'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
+            return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
 
     }
 
-    public function edit(Company $company)
+    public function edit(Menu $menu)
     {
-        if (Auth::id() != $company->owner) {
-            abort(403, 'Choose another company');
+        if (!$menu->company()->whereRelation('owner', 'owner', Auth::id())) {
+            abort(403, 'Choose another menu');
         }
 
-        return view('companies.update', [
-            'company' => $company
+        return view('menus.edit', [
+            'menu' => $menu,
+            'companies' => Company::owned()->get()
+
         ]);
     }
 
@@ -97,52 +92,58 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Company $company)
+    public function update(Menu $menu, Request $request)
     {
-        if (Auth::id() != $company->owner) {
-            abort(403, 'Choose another company');
+        if (!$menu->company()->whereRelation('owner', 'owner', Auth::id())) {
+            abort(403, 'Choose another menu');
         }
 
-        $menu = request()->validate([
-            'name' => 'required'
+        $request->validate([
+            'name' => '',
+            'company_id'
         ]);
 
+//dd($request);
         try {
-            $company->update($menu);
-            return redirect(route('company-show', $company))->with('message', ['text' => 'Името е успешно променето!', 'type' => 'success']);
+            $menu->update([
+                'name' => $request->name,
+                'company_id' => $request->company_id
+            ]);
+            return redirect(route('menus-menu.show', $menu))->with('message', ['text' => 'Menu updated!', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('company-show', $company))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
+            return redirect(route('menus-menu.show', $menu))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
 
     }
 
-    public function delete(Company $company)
+    public function delete(Menu $menu)
     {
+        if (!$menu->company()->whereRelation('owner', 'owner', Auth::id())) {
+            abort(403, 'Choose another menu');
+        }
+
         return view('menus.delete', [
-            'company' => $company
+            'menu' => $menu
         ]);
     }
 
     /**
-     * Soft delete menu
-     * @param Company $company
+     * Soft deletes menu and related products but keeps relationship intact
+     * @param Menu $menu
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy(Company $company)
+    public function destroy(Menu $menu)
     {
-        if (Auth::id() != $company->owner) {
-            abort(403, 'Choose another company');
+        if (!$menu->company()->whereRelation('owner', 'owner', Auth::id())) {
+            abort(403, 'Choose another menu');
         }
 
-        $menu = request()->validate([
-            'name' => 'required'
-        ]);
-
         try {
-            $company->products()->wherePivot('name', $menu)->delete();
-            return redirect(route('companies-index'))->with('message', ['text' => 'Menu removed!', 'type' => 'success']);
+            $menu->delete();
+            $menu->products()->delete();
+            return redirect(route('menus'))->with('message', ['text' => 'Menu removed!', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('companies-index'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
+            return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
 
     }

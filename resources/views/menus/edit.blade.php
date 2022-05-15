@@ -9,7 +9,7 @@
             <!-- Table -->
             <div class="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
                 <header class="px-5 py-4 border-b border-gray-100">
-                    <h2 class="text-center  font-semibold text-gray-800">Create new Menu</h2>
+                    <h2 class="text-center  font-semibold text-gray-800">Edit Menu</h2>
                 </header>
                 <div class="p-3">
                     <div class="overflow-x-auto">
@@ -25,18 +25,21 @@
                             </tr>
                             </thead>
                             <tbody class="text-sm divide-y divide-gray-100">
-                            <form action="{{route('menus-menu.store')}}" method="POST">
+                            <form action="{{route('menus-menu.update', $menu)}}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <tr>
                                     <td class="p-2">
                                         <label for="name">Name</label>
-                                        <input type="text" name="name" id="name" class="rounded block h-6">
+                                        <input type="text" name="name" id="name" class="rounded block h-6"
+                                               value="{{$menu->name ? : ''}}" placeholder="{{$menu->name}}">
                                     </td>
                                     <td class="p-2">
                                         <label for="company">Company</label>
                                         <select class="rounded w-full block" name="company_id" id="company">
                                             @foreach($companies as $company)
-                                                <option class="rounded w-max block" value="{{$company->id}}">{{$company->name}}</option>
+                                                <option class="rounded w-max block"
+                                                        value="{{$company->id}}" {{$menu->company ? 'selected' : ''}}>{{$company->name}}</option>
                                             @endforeach
                                         </select>
                                     </td>
