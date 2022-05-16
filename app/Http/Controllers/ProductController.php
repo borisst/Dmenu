@@ -26,16 +26,10 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
+
+        $user = Auth::user();
         try {
-            $product = Product::create([
-                'name' => request('name'),
-                'category' => request('category'),
-                'weight' => request('weight'),
-                'description' => request('description'),
-                'company_id' => 1,
-                'image' => Product::getImage()
-            ]);
-            $product->save();
+            $user->products()->create($request->validated()); // creates new model with validated data from ProductController
             return redirect()->back()->with(['success' => 'Product inserted successfully']);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => 'Please try again']);
@@ -44,32 +38,29 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-//        $product = Product::fowned()->findOrFail($id);
         return view('products.show', compact('product'));
     }
 
     public function edit(Product $product)
     {
-//        $product = Product::owned()->findOrFail($id);
         return view('products.edit', compact('product'));
 
     }
 
     public function update(ProductRequest $request, Product $product)
     {
-        try{
-        $product->update([
-            'name' => request('name'),
-            'category' => request('category'),
-            'weight' => request('weight'),
-            'description' => request('description'),
-            'image' => Product::getImage()
-        ]);
+        try {
+            $product->update([
+                'name' => request('name'),
+                'category' => request('category'),
+                'weight' => request('weight'),
+                'description' => request('description'),
+                'image' => Product::getImage()
+            ]);
 
             $product->save();
             return redirect()->back()->with(['success' => 'Product updated successfully']);
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error' => 'Please try again']);
         }
 
