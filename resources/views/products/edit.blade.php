@@ -29,7 +29,7 @@
 
     <div class="m-5 text-white p-6 max-w-sm bg-white rounded-lg border border-white shadow-md ">
 
-        <img src="{{asset('../images/' . $product->image)}}" alt="image">
+        <img src="{{asset('../images/' . $product->image)}}" alt="{{$product->name}}">
         <input value="{{$product->image}}" type="file" name="image">
     </div>
 

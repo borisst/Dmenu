@@ -53,6 +53,11 @@ class Product extends Model
             ->withPivot(['deleted_at']);
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     /**
      * Return only user-created products
      * @param $query
@@ -60,6 +65,6 @@ class Product extends Model
      */
     public function scopeOwned($query)
     {
-        return $query->company()->whereRelation('owner', 'owner', Auth::id());
+        return $query->whereRelation('company', 'owner', Auth::id());
     }
 }

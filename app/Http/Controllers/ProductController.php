@@ -46,15 +46,15 @@ class ProductController extends Controller
 
     }
 
-    public function show($id)
+    public function show(Product $product)
     {
-        $product = Product::owned()->findOrFail($id);
+//        $product = Product::fowned()->findOrFail($id);
         return view('products.show', compact('product'));
     }
 
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $product = Product::owned()->findOrFail($id);
+//        $product = Product::owned()->findOrFail($id);
         return view('products.edit', compact('product'));
 
     }
