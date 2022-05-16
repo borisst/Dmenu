@@ -4,7 +4,9 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\QrCodeController;
 use Illuminate\Support\Facades\Route;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,6 +17,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::get('qrcode',[QrCodeController::class,'index']);
 
 Route::controller(ProductController::class)->middleware('auth')->group(function () {
     Route::get('products', [ProductController::class, 'index']);
