@@ -12,8 +12,8 @@
 
     <!-- Styles -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+{{--    <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>--}}
+{{--    <link rel="stylesheet" href="{{ asset('css/app.css') }}">--}}
 
 </head>
 <body class="font-sans antialiased">
@@ -34,7 +34,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

@@ -28,6 +28,11 @@ class Company extends Model
         return $this->hasMany(Menu::class);
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
 
     /**
      * Return only user-created companies

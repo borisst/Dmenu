@@ -41,8 +41,8 @@
                                 <td class="p-2">
                                     <div class="flex items-center">
                                         <div class="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3"><img class="rounded-full"
-                                                                                               src="https://www.stevensegallery.com/40/40"
-                                                                                               width="40" height="40"
+                                                                                               src="https://www.stevensegallery.com/80/80"
+                                                                                               width="80" height="80"
                                                                                                alt="{{$product->name}}">
                                         </div>
                                         <div class="font-medium text-gray-800"><a
