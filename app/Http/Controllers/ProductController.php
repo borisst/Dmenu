@@ -26,24 +26,20 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        $user = Auth::id();
         try {
             $product = Product::create([
                 'name' => request('name'),
                 'category' => request('category'),
                 'weight' => request('weight'),
                 'description' => request('description'),
-                'user_id' => $user,
-                'company_id' => $user,
+                'company_id' => 1,
                 'image' => Product::getImage()
             ]);
             $product->save();
             return redirect()->back()->with(['success' => 'Product inserted successfully']);
-        }
-        catch (\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error' => 'Please try again']);
-            }
-
+        }
     }
 
     public function show(Product $product)
