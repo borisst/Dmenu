@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
@@ -25,10 +26,9 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'category' => 'required',
             'weight' => 'required',
             'description' => 'required',
-            'image' => ''
+            'image' => 'required|max:5000|image|mimes:jpg,png,jpeg'
         ];
     }
 }
