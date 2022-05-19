@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Company;
 use App\Models\Menu;
 use App\Models\Product;
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
+        Category::factory(4)->create();
 
         User::factory()->has(Company::factory()
             ->has(Menu::factory(2)

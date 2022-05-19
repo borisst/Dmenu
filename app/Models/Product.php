@@ -67,4 +67,9 @@ class Product extends Model
     {
         return $query->whereUserId(Auth::id());
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
