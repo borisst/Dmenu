@@ -66,8 +66,8 @@ class Menu extends Model
             ->whereNull('menu_product.deleted_at')
             ->wherePivot('user_id', Auth::id())
             ->withTimestamps()
-            ->withPivot(['deleted_at', 'user_id'])
-            ->orderBy('category');
+            ->with('category')
+            ->withPivot(['deleted_at', 'user_id']);
 
     }
 

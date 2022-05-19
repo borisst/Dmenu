@@ -5,7 +5,7 @@
 
         </h2>
     </x-slot>
-    <x-sidebar>
+{{--    <x-sidebar>--}}
 
-    </x-sidebar>
+{{--    </x-sidebar>--}}
 </x-app-layout>

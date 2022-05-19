@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
     </x-slot>
-
+{{--@dd($products)--}}
     <!-- Snippet -->
     <section class="flex flex-col justify-center antialiased bg-gray-100 text-gray-600 min-h-screen p-4">
         <div class="h-full">
@@ -60,7 +60,7 @@
                                     </div>
                                 </td>
                                 <td class="p-2">
-                                    <div class="text-center font-medium text-green-500">{{$product->category}}</div>
+                                    <div class="text-center font-medium text-green-500">{{$product->category->name}}</div>
                                 </td>
 
                                 <td class="p-2">
