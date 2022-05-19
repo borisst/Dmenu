@@ -26,10 +26,14 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-
-        $user = Auth::user();
         try {
-            $user->products()->create($request->validated()); // creates new model with validated data from ProductController
+            Product::create([
+                'name' => request('name'),
+                'weight' => request('weight'),
+                'description' => request('description'),
+                'image' => Product::getImage(),
+                'user_id' => Auth::id()
+            ]);
             return redirect()->back()->with(['success' => 'Product inserted successfully']);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => 'Please try again']);
@@ -43,22 +47,27 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        if (Auth::id() !== $product->user_id) {
+            return abort(404);
+        } else {
+            $product = Product::owned()->first();
+            return view('products.edit', compact('product'));
+        }
+
 
     }
 
-    public function update(ProductRequest $request, Product $product)
+    public function update(Product $product)
     {
         try {
             $product->update([
                 'name' => request('name'),
-                'category' => request('category'),
                 'weight' => request('weight'),
                 'description' => request('description'),
                 'image' => Product::getImage()
             ]);
 
-            $product->save();
+
             return redirect()->back()->with(['success' => 'Product updated successfully']);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => 'Please try again']);
