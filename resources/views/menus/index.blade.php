@@ -1,8 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
     </x-slot>
-
-
     <!-- Snippet -->
     <section class="flex flex-col justify-center antialiased bg-gray-100 text-gray-600 min-h-screen p-4">
         <div class="h-full">
@@ -45,7 +43,7 @@
                                                                                                    alt="{{$menu->name}}">
                                             </div>
                                             <div class="font-medium text-gray-800"><a
-                                                    href="{{route('menus-menu.show', $menu)}}">{{$menu->name}}</a></div>
+                                                    href="{{route('menus-menu.show', ['menu' => $menu, 'company' => $menu->company])}}">{{$menu->name}}</a></div>
                                         </div>
                                     </td>
                                     <td class="p-2">

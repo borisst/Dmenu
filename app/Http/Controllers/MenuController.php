@@ -31,13 +31,8 @@ class MenuController extends Controller
      * @param Menu $menu
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Menu $menu)
+    public function show(Company $company, Menu $menu)
     {
-        // check if auth user owns menu's company
-        if (!$menu->company()->whereRelation('owner', 'owner', Auth::id())) {
-            abort(403, 'Menu is off the menu. :)');
-        }
-
         return view('menus.show', [
             'menu' => $menu,
             'products' => $menu->products()->withPivot('price')->get()
