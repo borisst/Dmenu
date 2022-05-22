@@ -64,7 +64,6 @@ class Menu extends Model
     {
         return $this->belongsToMany(Product::class, 'menu_product', 'menu_id', 'product_id')
             ->whereNull('menu_product.deleted_at')
-            ->wherePivot('user_id', Auth::id())
             ->withTimestamps()
             ->with('category')
             ->withPivot(['deleted_at', 'user_id']);
