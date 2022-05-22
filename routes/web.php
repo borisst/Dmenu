@@ -45,7 +45,6 @@ Route::controller(CompanyController::class)->middleware('auth')->group(function 
 Route::controller(MenuController::class)->middleware('auth')->group(function () {
     Route::get('menus/', 'index')->name('menus');
     Route::get('menus/create', 'create')->name('menus-menu.create');
-    Route::get('{company:name}/{menu:name}', 'show')->name('menus-menu.show');
     Route::get('menus/{company}', 'show')->name('menus-company.show');
     Route::get('menus/{menu}/edit', 'edit')->name('menus-menu.edit');
     Route::get('menus/{menu}/delete', 'delete')->name('menus-menu.delete');
@@ -53,3 +52,5 @@ Route::controller(MenuController::class)->middleware('auth')->group(function () 
     Route::put('menus/{menu}', 'update')->name('menus-menu.update');
     Route::delete('menus/{menu}', 'destroy')->name('menus-menu.destroy');
 });
+
+Route::get('{company:name}/{menu:name}',[MenuController::class, 'show'])->name('menus-menu.show');
