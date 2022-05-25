@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('company_id')->references('id')->on('companies');
             $table->softDeletes();
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }
