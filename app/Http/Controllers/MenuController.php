@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
@@ -21,7 +22,7 @@ class MenuController extends Controller
     public function index()
     {
         return view('menus.index', [
-            'menus' => Menu::owned()->productsCount()->with('company:id,name')->get()
+            'menus' => Menu::owned()->productsCount()->with('company:id,name,slug')->get()
 //
         ]);
     }
@@ -51,18 +52,25 @@ class MenuController extends Controller
      * Stores a new Menu
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store()
+    public function store(Request $request)
     {
         if (!auth()->hasUser()) {
             abort(403, 'Forbidden');
         }
         $attributes = request()->validate([
             'name' => 'required',
-            'company_id' => 'required'
+            'company_id' => 'required',
+            'slug' => ''
         ]);
 
         try {
-            $menu = Menu::create($attributes);
+            Menu::create([
+                'name' => request()->name,
+                'company_id' => request()->company_id,
+                'slug' => Str::slug(request()->name)
+
+                // TODO skips validation for now, need to fix
+            ]);
             return redirect(route('menus'))->with('message', ['text' => 'The menu has been created', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
@@ -95,18 +103,19 @@ class MenuController extends Controller
 
         $request->validate([
             'name' => '',
-            'company_id'
+            'company_id' => ''
         ]);
 
-//dd($request);
         try {
-            $menu->update([
-                'name' => $request->name,
-                'company_id' => $request->company_id
-            ]);
-            return redirect(route('menus-menu.show', $menu))->with('message', ['text' => 'Menu updated!', 'type' => 'success']);
+            Menu::whereId($menu->id)
+                ->update([
+                    'name' => $request->name,
+                    'company_id' => $request->company_id,
+                    'slug' => Str::slug($request->name)
+                ]);
+            return redirect(route('menus'))->with('message', ['text' => 'Menu updated!', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('menus-menu.show', $menu))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
+            return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
 
     }

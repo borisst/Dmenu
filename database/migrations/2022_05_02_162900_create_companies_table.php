@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('owner')->references('id')->on('users');
+            $table->string('slug')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

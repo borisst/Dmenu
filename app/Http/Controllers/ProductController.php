@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -30,9 +31,11 @@ class ProductController extends Controller
             Product::create([
                 'name' => request('name'),
                 'weight' => request('weight'),
+                'slug' => Str::slug(request('name')),
                 'description' => request('description'),
                 'image' => Product::getImage(),
-                'user_id' => Auth::id()
+                'user_id' => Auth::id(),
+                'category_id' => 1 // TODO add category dropdown in view
             ]);
             return redirect()->back()->with(['success' => 'Product inserted successfully']);
         } catch (\Exception $e) {
@@ -64,7 +67,8 @@ class ProductController extends Controller
                 'name' => request('name'),
                 'weight' => request('weight'),
                 'description' => request('description'),
-                'image' => Product::getImage()
+                'image' => Product::getImage(),
+                'slug' => Str::slug(request('name')),
             ]);
 
 

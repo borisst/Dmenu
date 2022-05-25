@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::table('products', function (Blueprint $table) {
             $table->dropColumn('category');
             $table->foreignId('category_id')->references('id')->on('categories');
+            $table->string('slug')->nullable();
         });
     }
 

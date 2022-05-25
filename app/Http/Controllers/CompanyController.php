@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class CompanyController extends Controller
 {
@@ -46,7 +48,10 @@ class CompanyController extends Controller
         ]);
 
         try {
-            $user->companies()->create($attributes);
+            $user->companies()->create([
+                'name' => request()->name,
+                'slug' => Str::slug(request()->name)
+            ]);
             return redirect(route('companies-index'))->with('message', ['text' => 'Компанијата е успешно додадена', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('companies-index'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
@@ -68,14 +73,17 @@ class CompanyController extends Controller
      */
     public function update(Company $company)
     {
-        $user = auth()->user();
-
         $attributes = request()->validate([
             'name' => 'required'
         ]);
 
         try {
-            $company->update($attributes);
+            Company::whereId($company->id)
+                ->whereOwner(Auth::id())
+                ->update([
+                    'name' => $attributes->name,
+                    'slug' => Str::slug(request('name'))
+                ]);
             return redirect(route('company-show', $company))->with('message', ['text' => 'Името е успешно променето!', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('company-show', $company))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
