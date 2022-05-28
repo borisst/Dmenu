@@ -24,7 +24,8 @@ class ProductFactory extends Factory
             'description' => $this->faker->sentence,
             'image' => $this->faker->imageUrl($width = 200, $height = 120),
             'user_id' => '1',
-            'category_id' => Category::all()->random()->id
+            'category_id' => Category::all()->random()->id,
+            'slug' => $this->faker->slug
         ];
     }
 }

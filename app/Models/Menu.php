@@ -65,7 +65,7 @@ class Menu extends Model
         return $this->belongsToMany(Product::class, 'menu_product', 'menu_id', 'product_id')
             ->whereNull('menu_product.deleted_at')
             ->withTimestamps()
-            ->with('category')
+            ->with('category:id,name')
             ->withPivot(['deleted_at', 'user_id']);
 
     }
@@ -86,7 +86,7 @@ class Menu extends Model
 
     public function company()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class)->with('city');
     }
 
 }

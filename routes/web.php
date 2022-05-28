@@ -53,4 +53,4 @@ Route::controller(MenuController::class)->middleware('auth')->group(function () 
     Route::delete('menus/{menu}', 'destroy')->name('menus-menu.destroy');
 });
 
-Route::get('{company:slug}/{menu}',[MenuController::class, 'show'])->name('menus-menu.show');
+Route::get('/{city:slug}/{company:slug}/{menu}',[MenuController::class, 'show'])->name('menus-menu.show');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Company;
 use App\Models\Menu;
 use App\Models\Product;
@@ -22,7 +23,7 @@ class MenuController extends Controller
     public function index()
     {
         return view('menus.index', [
-            'menus' => Menu::owned()->productsCount()->with('company:id,name,slug')->get()
+            'menus' => Menu::owned()->productsCount()->with('company.city')->get()
 //
         ]);
     }
@@ -32,7 +33,7 @@ class MenuController extends Controller
      * @param Menu $menu
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Company $company, Menu $menu)
+    public function show($city, $company, Menu $menu)
     {
         return view('menus.show', [
             'menu' => $menu,
