@@ -67,7 +67,8 @@ class MenuController extends Controller
             Menu::create([
                 'name' => request()->name,
                 'company_id' => request()->company_id,
-                'slug' => Str::slug(request()->name)
+                'slug' => Str::slug(request()->name),
+                'qrcode' => Menu::storeQrCode()
 
                 // TODO skips validation for now, need to fix
             ]);
