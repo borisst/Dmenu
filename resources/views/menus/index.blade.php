@@ -33,6 +33,7 @@
                             </thead>
                             <tbody class="text-sm divide-y divide-gray-100">
                             @foreach($menus as $menu)
+{{--                                @dd($menu)--}}
                                 <tr>
                                     <td class="p-2">
                                         <div class="flex items-center">
@@ -43,7 +44,7 @@
                                                                                                    alt="{{$menu->name}}">
                                             </div>
                                             <div class="font-medium text-gray-800"><a
-                                                    href="{{route('menus-menu.show', ['menu' => $menu, 'company' => $menu->company])}}">{{$menu->name}}</a></div>
+                                                    href="{{route('menus-menu.show', ['menu' => $menu, 'company' => $menu->company, 'city' => $menu->company->city])}}">{{$menu->name}}</a></div>
                                         </div>
                                     </td>
                                     <td class="p-2">

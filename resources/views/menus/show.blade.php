@@ -1,6 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
     </x-slot>
+
+{{--    @dd($products)--}}
     <section class="flex flex-col justify-center antialiased bg-gray-100 text-gray-600 min-h-screen p-4">
         <div class="h-full">
             <!-- Table -->

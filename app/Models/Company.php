@@ -28,6 +28,10 @@ class Company extends Model
         return $this->hasMany(Menu::class);
     }
 
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 
     /**
      * Return only user-created companies

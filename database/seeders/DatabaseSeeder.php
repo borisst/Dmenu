@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Company;
 use App\Models\Menu;
 use App\Models\Product;
@@ -21,6 +22,8 @@ class DatabaseSeeder extends Seeder
     {
 
         Category::factory(4)->create();
+
+        City::factory(4)->create();
 
         User::factory()->has(Company::factory()
             ->has(Menu::factory(2)

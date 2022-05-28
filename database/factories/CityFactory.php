@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Menu>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\City>
  */
-class MenuFactory extends Factory
+class CityFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +18,8 @@ class MenuFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'company_id' => Company::all()->random()->id,
+            'name' => $this->faker->city,
             'slug' => $this->faker->slug
-
         ];
     }
 }
