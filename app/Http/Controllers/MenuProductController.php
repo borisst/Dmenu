@@ -39,9 +39,9 @@ class MenuProductController extends Controller
 
         try {
             $menu->products()->attach($products);
-            return redirect(route('menus-menu.show', $menu))->with('message', ['text' => 'Product(s) added!', 'type' => 'success']);
+            return redirect(route('menus'))->with('message', ['text' => 'Product(s) added!', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('menus-menu.show', $menu))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
+            return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
 
     }
@@ -58,9 +58,9 @@ class MenuProductController extends Controller
 
         try {
             $menu->products()->detach($products);
-            return redirect(route('menus-menu.show', $menu))->with('message', ['text' => 'Product(s) removed!', 'type' => 'success']);
+            return redirect(route('menus'))->with('message', ['text' => 'Product(s) removed!', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('menus-menu.show', $menu))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
+            return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
 
     }
