@@ -17,7 +17,7 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('qrcode',[QrCodeController::class,'index']);
+Route::get('menus/{menu}/qrcode',[QrCodeController::class,'viewQrCode']);
 
 Route::controller(ProductController::class)->middleware('auth')->group(function () {
     Route::get('products', [ProductController::class, 'index'])->name('products');
