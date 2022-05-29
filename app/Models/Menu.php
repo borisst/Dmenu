@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class Menu extends Model
 {
@@ -21,6 +23,16 @@ class Menu extends Model
      * @var array<int, string>
      */
     protected $guarded = [];
+
+    public static function storeQrCode()
+    {
+        $image = QrCode::format('png')
+            ->size(200)->errorCorrection('H')
+            ->generate('http://dmenu.test/menus');
+        $output_file = '/images/qr-code/img-' . time() . '.png';
+        Storage::disk('public')->put($output_file, $image);
+        return $output_file;
+    }
 
     public function owner()
     {
