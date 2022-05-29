@@ -26,13 +26,15 @@ class Menu extends Model
 
     public static function storeQrCode()
     {
-        $image = QrCode::format('png')
+        $image = QrCode::format('svg')
             ->size(200)->errorCorrection('H')
             ->generate('http://dmenu.test/menus');
-        $output_file = '/images/qr-code/img-' . time() . '.png';
-        Storage::disk('public')->put($output_file, $image);
+        $path = '/images/qr-code/img-' . time() . '.svg';
+        $output_file = time() . '.svg';
+        Storage::disk('public')->put($path, $image);
         return $output_file;
     }
+
 
     public function owner()
     {
