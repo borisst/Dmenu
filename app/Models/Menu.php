@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use http\Env\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,16 +25,7 @@ class Menu extends Model
      */
     protected $guarded = [];
 
-    public static function storeQrCode()
-    {
-        $image = QrCode::format('svg')
-            ->size(200)->errorCorrection('H')
-            ->generate('http://dmenu.test/menus');
-        $path = '/images/qr-code/img-' . time() . '.svg';
-        $output_file = time() . '.svg';
-        Storage::disk('public')->put($path, $image);
-        return $output_file;
-    }
+
 
 
     public function owner()
