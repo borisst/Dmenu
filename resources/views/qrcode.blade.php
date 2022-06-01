@@ -12,5 +12,6 @@
 <div class="flex justify-center pt-10">
    <img src="data:image/png;base64,{{base64_encode($generateQr . $qrCode) }}" alt="what">
 </div>
+
 </body>
 </html>

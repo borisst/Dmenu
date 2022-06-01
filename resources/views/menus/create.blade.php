@@ -25,7 +25,7 @@
                             </tr>
                             </thead>
                             <tbody class="text-sm divide-y divide-gray-100">
-                            <form action="{{route('menus-menu.store')}}" method="POST">
+                            <form action="{{route('menus-menu.store')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <tr>
                                     <td class="p-2">
@@ -40,6 +40,8 @@
                                             @endforeach
                                         </select>
                                     </td>
+                                    Choose company logo <br>
+                                    <input type="file" name="logo">
                                     <td class="p-2">
                                         <button type="submit">Save</button>
                                     </td>
