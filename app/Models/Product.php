@@ -15,16 +15,7 @@ class Product extends Model
 
     protected $guarded = [];
 
-    public static function getImage()
-    {
-        if (request()->hasFile('image')) {
-            $file = request()->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '.' . $extension;
-            $file->move('images', $fileName);
-            return $fileName;
-        }
-    }
+
 
     /**
      *

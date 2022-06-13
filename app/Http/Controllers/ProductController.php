@@ -15,8 +15,9 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        return view('products.index', [
+            'products' => Product::all()
+        ]);
     }
 
     public function create()
@@ -27,16 +28,18 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
+
         try {
-            Product::create([
+            $product = Product::create([
                 'name' => request('name'),
                 'weight' => request('weight'),
                 'slug' => Str::slug(request('name')),
                 'description' => request('description'),
-                'image' => Product::getImage(),
+                'image' => ImageController::getImage(),
                 'user_id' => Auth::id(),
                 'category_id' => 1 // TODO add category dropdown in view
             ]);
+            $product->save();
             return redirect()->back()->with(['success' => 'Product inserted successfully']);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => 'Please try again']);
@@ -45,7 +48,9 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return view('products.show', compact('product'));
+        return view('products.show', [
+            'product' => $product
+        ]);
     }
 
     public function edit(Product $product)
@@ -53,8 +58,9 @@ class ProductController extends Controller
         if (Auth::id() !== $product->user_id) {
             return abort(404);
         } else {
-            $product = Product::owned()->first();
-            return view('products.edit', compact('product'));
+            return view('products.edit', [
+                'product' => Product::owned()->first()
+            ]);
         }
 
 
@@ -67,7 +73,7 @@ class ProductController extends Controller
                 'name' => request('name'),
                 'weight' => request('weight'),
                 'description' => request('description'),
-                'image' => Product::getImage(),
+                'image' => ImageController::getImage(),
                 'slug' => Str::slug(request('name')),
             ]);
 
