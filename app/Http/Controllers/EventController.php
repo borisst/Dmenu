@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
@@ -18,13 +19,11 @@ class EventController extends Controller
 
     public function create()
     {
-       return view('events.create',[
-           'events' => Event::owned()->get()
-       ]);
+       return view('events.create');
     }
 
 
-    public function store(Request $request)
+    public function store(EventRequest $request)
     {
         try {
             $event = Event::create([
@@ -47,10 +46,10 @@ class EventController extends Controller
         ]);
     }
 
-    public function edit()
+    public function edit(Event $event)
     {
-        return view('products.edit', [
-            'event' => Event::owned()->first()
+        return view('events.edit', [
+            'event' => $event
         ]);
     }
 
