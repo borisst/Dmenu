@@ -1,7 +1,11 @@
 <?php
 
 
+
 use App\Http\Controllers\CategoryController;
+
+use App\Http\Controllers\EventController;
+
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\MenuController;
@@ -20,6 +24,15 @@ require __DIR__ . '/auth.php';
 
 Route::get('menus/{menu}/qrcode', [QrCodeController::class, 'viewQrCode']);
 
+Route::controller(ProductController::class)->middleware('auth')->group(function () {
+    Route::get('events', [EventController::class,'index'])->name('events');
+    Route::get('events/create',[EventController::class,'create'])->name('events.create');
+    Route::post('events',[EventController::class,'store'])->name('events.store');
+    Route::get('events/{event}',[EventController::class,'show'])->name('events.show');
+    Route::get('events/{event}/edit',[EventController::class,'edit'])->name('events.edit');
+    Route::patch('events/{event}',[EventController::class,'update'])->name('events.update');
+    Route::delete('events/{event}',[EventController::class,'destroy'])->name('events.delete');
+});
 
 Route::controller(ProductController::class)->middleware('auth')->group(function () {
     Route::get('products', [ProductController::class, 'index'])->name('products');
