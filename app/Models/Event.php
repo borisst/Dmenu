@@ -10,9 +10,4 @@ class Event extends Model
 {
     protected $guarded =[];
     use HasFactory;
-
-    public function scopeOwned($query)
-    {
-        return $query->whereUserId(Auth::id());
-    }
 }
