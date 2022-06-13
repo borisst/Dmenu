@@ -53,7 +53,7 @@ class MenuController extends Controller
      * Stores a new Menu
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request,QrCodeController $qrCodeController)
+    public function store(Request $request, QrCodeController $qrCodeController)
     {
         if (!auth()->hasUser()) {
             abort(403, 'Forbidden');
@@ -77,6 +77,7 @@ class MenuController extends Controller
 
             return redirect(route('menus'))->with('message', ['text' => 'The menu has been created', 'type' => 'success']);
         } catch (\Exception $e) {
+            dd($e);
             return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
 
