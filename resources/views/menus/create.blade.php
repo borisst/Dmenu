@@ -25,8 +25,9 @@
                             </tr>
                             </thead>
                             <tbody class="text-sm divide-y divide-gray-100">
-                            <form action="{{route('menus-menu.store')}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{route('menus-menu.store')}}" method="POST">
                                 @csrf
+                                @method('POST')
                                 <tr>
                                     <td class="p-2">
                                         <label for="name">Name</label>

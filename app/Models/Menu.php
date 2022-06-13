@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class Menu extends Model
 {
@@ -24,9 +22,6 @@ class Menu extends Model
      * @var array<int, string>
      */
     protected $guarded = [];
-
-
-
 
     public function owner()
     {
@@ -69,9 +64,9 @@ class Menu extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'menu_product', 'menu_id', 'product_id')
-            ->whereNull('menu_product.deleted_at')
+//            ->whereNull('menu_product.deleted_at')
             ->withTimestamps()
-            ->with('category:id,name')
+            ->with('category:id,name,image')
             ->withPivot(['deleted_at', 'user_id']);
 
     }
@@ -85,6 +80,7 @@ class Menu extends Model
     public function productsWithTrashed()
     {
         return $this->belongsToMany(Product::class, 'menu_product', 'menu_id', 'product_id')
+            ->whereNotNull('menu_product.deleted_at')
             ->withTimestamps()
             ->withPivot(['deleted_at', 'name']);
 

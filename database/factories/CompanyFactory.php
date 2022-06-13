@@ -22,7 +22,13 @@ class CompanyFactory extends Factory
             'name' => $this->faker->company,
             'owner' => User::all()->random()->id,
             'city_id' => City::all()->random()->id,
-            'slug' => $this->faker->slug
+            'slug' => $this->faker->slug,
+            'contact_number' => $this->faker->phoneNumber,
+            'opens_at' => $this->faker->time,
+            'closes_at' => $this->faker->time,
+            'fb_link' => $this->faker->url,
+            'ig_link' => $this->faker->url,
+            'logo' => $this->faker->imageUrl($width = 200, $height = 120)
 
         ];
     }

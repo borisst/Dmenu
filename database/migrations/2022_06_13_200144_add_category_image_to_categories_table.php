@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('menus', function (Blueprint $table) {
-            $table->string('company_logo')->nullable();
+        Schema::table('categories', function (Blueprint $table) {
+            $table->string('image')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('menus', function (Blueprint $table) {
-            $table->dropColumn('company_logo');
+        Schema::table('categories', function (Blueprint $table) {
+            //
         });
     }
 };

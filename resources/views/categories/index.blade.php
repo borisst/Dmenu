@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <section class="bg-gray-800 body-font max-w-md mx-auto">
 
         {{--        Nav Menu--}}
@@ -11,37 +10,22 @@
             </div>
         </div>
 
-        {{--        Menus--}}
+{{--        Category List--}}
         <div class="container px-2 mx-auto flex flex-wrap">
-            @foreach($menus as $menu)
-                <div class="flex flex-wrap w-full py-6 px-10 relative mb-2 bg-black">
-                    <div class="text-center relative z-10 w-full">
-                        <a href="{{route('category.index', ['company' => $company, 'menu' => $menu])}}"
-                           class="uppercase text-2xl text-orange-300 font-medium title-font mb-2">Menu {{$loop->iteration}}</a>
-                        <p class="text-orange-200">{{$menu->name}}</p>
+            @foreach($categories as $category)
+                <div class="flex flex-row justify-left items-center w-full relative mb-2 bg-black">
+                    <div>
+                        <img class="object-fill" src="{{$category->image}}" alt="">
+                    </div>
+                    <div class="pl-5 z-10 w-full">
+                        <a href="{{route('company-category.show', ['category' => $category->id, 'company' => $company])}}"
+                           class="text-orange-200 capitalize">{{$category->name}}</a>
                     </div>
                 </div>
             @endforeach
-
-            <div class="flex flex-wrap w-full py-10 px-10 relative mb-2 bg-black">
-                <div class="text-center relative z-10 w-full">
-                    <a href="#" class="uppercase text-2xl text-orange-300 font-medium title-font mb-2">Agenda</a>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap w-full py-10 px-10 relative mb-2 bg-black">
-                <div class="text-center relative z-10 w-full">
-                    <a href="#" class="uppercase text-2xl text-orange-300 font-medium title-font mb-2">Promotions</a>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap place-content-center w-full h-full py-2 relative mb-2">
-                <img class="object-fill w-full" src="https://dummyimage.com/400x600" alt="">
-            </div>
         </div>
 
         <div class="container mx-auto h-full flex flex-row">
-
             <div class="basis-3/4">
                 <div class="flex flex-col w-full text-gray-500 px-10 bg-black">
 
@@ -89,9 +73,9 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="gray" viewBox="0 0 24 24"
                              stroke="currentColor" stroke-width="2">
                             <a href="{{$company->fb_link}}">
-                                    <path
-                                        d="M21,1H3A2,2,0,0,0,1,3V21a2,2,0,0,0,2,2h7.5a.5.5,0,0,0,.5-.5v-7a.5.5,0,0,0-.5-.5h-1a.5.5,0,0,1-.5-.5v-3a.5.5,0,0,1,.5-.5h1a.5.5,0,0,0,.5-.5v-1A4.5,4.5,0,0,1,15.5,5h3a.5.5,0,0,1,.5.5v3a.5.5,0,0,1-.5.5h-3a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h3a.5.5,0,0,1,.49.58l-.5,3A.5.5,0,0,1,18,15H15.5a.5.5,0,0,0-.5.5v7a.5.5,0,0,0,.5.5H21a2,2,0,0,0,2-2V3A2,2,0,0,0,21,1Z"
-                                    />
+                                <path
+                                    d="M21,1H3A2,2,0,0,0,1,3V21a2,2,0,0,0,2,2h7.5a.5.5,0,0,0,.5-.5v-7a.5.5,0,0,0-.5-.5h-1a.5.5,0,0,1-.5-.5v-3a.5.5,0,0,1,.5-.5h1a.5.5,0,0,0,.5-.5v-1A4.5,4.5,0,0,1,15.5,5h3a.5.5,0,0,1,.5.5v3a.5.5,0,0,1-.5.5h-3a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h3a.5.5,0,0,1,.49.58l-.5,3A.5.5,0,0,1,18,15H15.5a.5.5,0,0,0-.5.5v7a.5.5,0,0,0,.5.5H21a2,2,0,0,0,2-2V3A2,2,0,0,0,21,1Z"
+                                />
                             </a>
 
                         </svg>

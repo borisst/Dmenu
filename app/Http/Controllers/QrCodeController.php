@@ -31,7 +31,8 @@ class QrCodeController extends Controller
     public function storeQrCode()
     {
         $image = QrCode::format('png')
-            ->size(200)->errorCorrection('H')
+            ->size(200)
+            ->errorCorrection('H')
             ->generate(request()->url());
         $path = '/images/qr-code/' . time() . '.png';
         $output_file = time() . '.png';
