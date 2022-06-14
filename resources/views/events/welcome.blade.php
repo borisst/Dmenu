@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <section class="bg-gray-800 body-font max-w-md mx-auto">
 
         {{--        Nav Menu--}}
@@ -9,37 +8,27 @@
                     <img class="object-fill w-full h-12" src="https://dummyimage.com/100" alt="Company Name">
                 </div>
             </div>
-        </div>
 
-        {{--        Menus--}}
-        <div class="container px-2 mx-auto flex flex-wrap">
-            @foreach($menus as $menu)
-                <div class="flex flex-wrap w-full py-6 px-10 relative mb-2 bg-black">
-                    <div class="text-center relative z-10 w-full">
-                        <a href="{{route('category.index', ['company' => $company, 'menu' => $menu])}}"
-                           class="uppercase text-2xl text-orange-300 font-medium title-font mb-2">Menu {{$loop->iteration}}</a>
-                        <p class="text-orange-200">{{$menu->name}}</p>
+
+            @forelse($events as $event)
+                <div class="container px-2 mx-auto flex flex-wrap">
+
+                    <div class="flex flex-wrap w-full relative mb-2 bg-black">
+                        <p><img class="object-fill w-full" src="{{asset('../images/' . $event->image)}}" alt=""/></p>
+
+                        <div class="text-center relative z-10 w-full">
+                            <h1 class="text-3xl text-orange-300  ">{{$event->name}}</h1>
+
+                            <p class="text-orange-300">{{$event->date}}</p>
+                        </div>
+
                     </div>
                 </div>
-            @endforeach
 
-            <div class="flex flex-wrap w-full py-10 px-10 relative mb-2 bg-black">
-                <div class="text-center relative z-10 w-full">
-                    <a href="{{route('events.welcome')}}" class="uppercase text-2xl text-orange-300 font-medium title-font mb-2">Agenda</a>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap w-full py-10 px-10 relative mb-2 bg-black">
-                <div class="text-center relative z-10 w-full">
-                    <a href="#" class="uppercase text-2xl text-orange-300 font-medium title-font mb-2">Promotions</a>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap place-content-center w-full h-full py-2 relative mb-2">
-                <img class="object-fill w-full" src="https://dummyimage.com/400x600" alt="">
-            </div>
+            @empty
+                <p>No events yet.</p>
+            @endforelse
         </div>
-
         <div class="container mx-auto h-full flex flex-row">
 
             <div class="basis-3/4">
@@ -75,7 +64,7 @@
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
                              stroke="currentColor" stroke-width="2">
-                            <a href="{{$company->ig_link}}">
+                            <a xlink:href="{{$company->ig_link}}">
                                 <path
                                     d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069
                             4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204
@@ -88,9 +77,9 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="gray" viewBox="0 0 24 24"
                              stroke="currentColor" stroke-width="2">
                             <a href="{{$company->fb_link}}">
-                                    <path
-                                        d="M21,1H3A2,2,0,0,0,1,3V21a2,2,0,0,0,2,2h7.5a.5.5,0,0,0,.5-.5v-7a.5.5,0,0,0-.5-.5h-1a.5.5,0,0,1-.5-.5v-3a.5.5,0,0,1,.5-.5h1a.5.5,0,0,0,.5-.5v-1A4.5,4.5,0,0,1,15.5,5h3a.5.5,0,0,1,.5.5v3a.5.5,0,0,1-.5.5h-3a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h3a.5.5,0,0,1,.49.58l-.5,3A.5.5,0,0,1,18,15H15.5a.5.5,0,0,0-.5.5v7a.5.5,0,0,0,.5.5H21a2,2,0,0,0,2-2V3A2,2,0,0,0,21,1Z"
-                                    />
+                                <path
+                                    d="M21,1H3A2,2,0,0,0,1,3V21a2,2,0,0,0,2,2h7.5a.5.5,0,0,0,.5-.5v-7a.5.5,0,0,0-.5-.5h-1a.5.5,0,0,1-.5-.5v-3a.5.5,0,0,1,.5-.5h1a.5.5,0,0,0,.5-.5v-1A4.5,4.5,0,0,1,15.5,5h3a.5.5,0,0,1,.5.5v3a.5.5,0,0,1-.5.5h-3a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h3a.5.5,0,0,1,.49.58l-.5,3A.5.5,0,0,1,18,15H15.5a.5.5,0,0,0-.5.5v7a.5.5,0,0,0,.5.5H21a2,2,0,0,0,2-2V3A2,2,0,0,0,21,1Z"
+                                />
                             </a>
 
                         </svg>
