@@ -6,7 +6,7 @@
         <div class="container mx-auto flex flex-wrap">
             <div class="flex flex-wrap place-content-center w-full text-orange-300 px-10 py-8 mb-2 bg-black">
                 <div>
-                    <img class="object-fill w-full h-12" src="https://dummyimage.com/100" alt="Company Name">
+                    <img class="object-fill w-full h-12" src="{{$company->logo}}" alt="Company Name">
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
 
             <div class="flex flex-wrap w-full py-10 px-10 relative mb-2 bg-black">
                 <div class="text-center relative z-10 w-full">
-                    <a href="{{route('events.welcome')}}" class="uppercase text-2xl text-orange-300 font-medium title-font mb-2">Agenda</a>
+                    <a href="{{route('events.welcome', ['company' => $company->id])}}" class="uppercase text-2xl text-orange-300 font-medium title-font mb-2">Agenda</a>
                 </div>
             </div>
 

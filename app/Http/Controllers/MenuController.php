@@ -77,7 +77,6 @@ class MenuController extends Controller
 
             return redirect(route('menus'))->with('message', ['text' => 'The menu has been created', 'type' => 'success']);
         } catch (\Exception $e) {
-            dd($e);
             return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
 
@@ -149,7 +148,7 @@ class MenuController extends Controller
 
         try {
             $menu->delete();
-            $menu->products()->delete();
+//            $menu->products()->delete();
             return redirect(route('menus'))->with('message', ['text' => 'Menu removed!', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
