@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventRequest;
+use App\Models\Company;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,14 @@ class EventController extends Controller
     {
         return view('events.index', [
             'events' => Event::all()
+        ]);
+    }
+
+    public function welcome(Company $company)
+    {
+        return view('events.welcome', [
+            'events' => Event::all(),
+            'company' => $company
         ]);
     }
 

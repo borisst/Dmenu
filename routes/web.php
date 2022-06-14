@@ -23,8 +23,9 @@ Route::get('/dashboard', function () {
 require __DIR__ . '/auth.php';
 
 Route::get('menus/{menu}/qrcode', [QrCodeController::class, 'viewQrCode']);
+Route::get('events',[EventController::class,'welcome'])->name('events.welcome');
 
-Route::controller(ProductController::class)->middleware('auth')->group(function () {
+Route::controller(EventController::class)->middleware('auth')->group(function () {
     Route::get('events', [EventController::class,'index'])->name('events');
     Route::get('events/create',[EventController::class,'create'])->name('events.create');
     Route::post('events',[EventController::class,'store'])->name('events.store');
