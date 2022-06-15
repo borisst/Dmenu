@@ -2,84 +2,87 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
 
 class PromotionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        return view('promotions.index',[
+           'promotions' => Promotion::all()
+        ]);
+    }
+    public function welcome(Company $company){
+        return view('promotions.welcome',[
+           'promotions' => Promotion::all(),
+           'company' => $company
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('promotions.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        try {
+            $promotion = Promotion::create([
+                'company_id' => request('company_id'),
+                'event_id' => request('event_id'),
+                'name' => request('name'),
+                'image' => ImageController::getImage(),
+                'price' => request('price')
+            ]);
+            $promotion->save();
+            return redirect()->back()->with('success','Promotion added successfully');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error','Please try again');
+        }
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Promotion  $promotion
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Promotion $promotion)
     {
-        //
+        return view('promotions.show',[
+            'promotion' => $promotion
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Promotion  $promotion
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Promotion $promotion)
     {
-        //
+
+        return view('promotions.edit',[
+            'promotion' => $promotion
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Promotion  $promotion
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Promotion $promotion)
+
+    public function update(Promotion $promotion)
     {
-        //
+        try {
+            $promotion->update([
+                'company_id' => request('company_id'),
+                'event_id' => request('event_id'),
+                'name' => request('name'),
+                'image' => ImageController::getImage(),
+                'price' => request('price')
+            ]);
+            return redirect()->back()->with('success','Promotion updated successfully');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error','Please try again');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Promotion  $promotion
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Promotion $promotion)
     {
-        //
+        $promotion->delete();
+        return redirect()->back()->with('message','Promotion deleted');
+
     }
 }
