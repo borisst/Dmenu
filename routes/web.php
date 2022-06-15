@@ -9,8 +9,10 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\QrCodeController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,6 +35,18 @@ Route::controller(EventController::class)->middleware('auth')->group(function ()
     Route::get('events/{event}/edit',[EventController::class,'edit'])->name('events.edit');
     Route::patch('events/{event}',[EventController::class,'update'])->name('events.update');
     Route::delete('events/{event}',[EventController::class,'destroy'])->name('events.delete');
+});
+
+Route::get('companies/{company}/promotions',[PromotionController::class,'welcome'])->name('events.welcome');
+
+Route::controller(PromotionController::class)->middleware('auth')->group(function (){
+    Route::get('promotions',[PromotionController::class,'index'])->name('promotions');
+    Route::get('promotions/create',[PromotionController::class,'create'])->name('promotions.create');
+    Route::post('promotions',[PromotionController::class,'store'])->name('promotion.store');
+    Route::get('promotions/{promotion}',[PromotionController::class,'show'])->name('promotions.show');
+    Route::get('promotions/{promotion}/edit',[PromotionController::class,'edit'])->name('promotions.edit');
+    Route::patch('promotions/{promotion}',[PromotionController::class,'update'])->name('promotions.update');
+    Route::delete('promotions{promotion}',[PromotionController::class,'destroy'])->name('promotions.delete');
 });
 
 Route::controller(ProductController::class)->middleware('auth')->group(function () {
