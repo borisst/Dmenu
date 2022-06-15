@@ -18,6 +18,13 @@ class Company extends Model
      */
     protected $guarded = [];
 
+    public function events(){
+        return $this->hasMany(Event::class);
+    }
+    public function promotions(){
+        return $this->hasMany(Event::class);
+    }
+
     public function owner()
     {
         return $this->belongsTo(User::class);

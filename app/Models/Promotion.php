@@ -4,20 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
-class Event extends Model
+class Promotion extends Model
 {
-    protected $guarded =[];
-
+    protected $guarded = [];
     use HasFactory;
 
     public function company(){
         return $this->belongsTo(Company::class);
     }
-    public function promotions(){
-        return $this->hasMany(Promotion::class);
+    public function event(){
+        return $this->belongsTo(Event::class);
     }
-
-
 }
