@@ -31,7 +31,7 @@
 
             <div class="flex flex-wrap w-full py-10 px-10 relative mb-2 bg-black">
                 <div class="text-center relative z-10 w-full">
-                    <a href="#" class="uppercase text-2xl text-orange-300 font-medium title-font mb-2">Promotions</a>
+                    <a href="{{route('promotions.welcome',['company' => $company->id])}}" class="uppercase text-2xl text-orange-300 font-medium title-font mb-2">Promotions</a>
                 </div>
             </div>
 

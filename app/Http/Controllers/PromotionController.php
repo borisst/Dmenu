@@ -24,7 +24,9 @@ class PromotionController extends Controller
 
     public function create()
     {
-        return view('promotions.create');
+        return view('promotions.create',[
+            'companies' => Company::owned()->get()
+        ]);
     }
 
     public function store()
@@ -35,7 +37,8 @@ class PromotionController extends Controller
                 'event_id' => request('event_id'),
                 'name' => request('name'),
                 'image' => ImageController::getImage(),
-                'price' => request('price')
+                'price' => request('price'),
+                'date' => request('date')
             ]);
             $promotion->save();
             return redirect()->back()->with('success','Promotion added successfully');
@@ -49,7 +52,7 @@ class PromotionController extends Controller
     public function show(Promotion $promotion)
     {
         return view('promotions.show',[
-            'promotion' => $promotion
+            'promotion' => $promotion,
         ]);
     }
 
@@ -57,7 +60,8 @@ class PromotionController extends Controller
     {
 
         return view('promotions.edit',[
-            'promotion' => $promotion
+            'promotion' => $promotion,
+            'companies' => Company::owned()->get()
         ]);
     }
 
@@ -70,7 +74,8 @@ class PromotionController extends Controller
                 'event_id' => request('event_id'),
                 'name' => request('name'),
                 'image' => ImageController::getImage(),
-                'price' => request('price')
+                'price' => request('price'),
+                'date' => request('date')
             ]);
             return redirect()->back()->with('success','Promotion updated successfully');
         }catch(\Exception $e){

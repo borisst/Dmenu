@@ -37,12 +37,12 @@ Route::controller(EventController::class)->middleware('auth')->group(function ()
     Route::delete('events/{event}',[EventController::class,'destroy'])->name('events.delete');
 });
 
-Route::get('companies/{company}/promotions',[PromotionController::class,'welcome'])->name('events.welcome');
+Route::get('companies/{company}/promotions',[PromotionController::class,'welcome'])->name('promotions.welcome');
 
 Route::controller(PromotionController::class)->middleware('auth')->group(function (){
     Route::get('promotions',[PromotionController::class,'index'])->name('promotions');
     Route::get('promotions/create',[PromotionController::class,'create'])->name('promotions.create');
-    Route::post('promotions',[PromotionController::class,'store'])->name('promotion.store');
+    Route::post('promotions',[PromotionController::class,'store'])->name('promotions.store');
     Route::get('promotions/{promotion}',[PromotionController::class,'show'])->name('promotions.show');
     Route::get('promotions/{promotion}/edit',[PromotionController::class,'edit'])->name('promotions.edit');
     Route::patch('promotions/{promotion}',[PromotionController::class,'update'])->name('promotions.update');
