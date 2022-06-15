@@ -20,7 +20,7 @@ class MenuFactory extends Factory
         return [
             'name' => $this->faker->name,
             'company_id' => Company::all()->random()->id,
-            'slug' => $this->faker->slug
+            'slug' => $this->faker->slug(max([1,1]))
 
         ];
     }

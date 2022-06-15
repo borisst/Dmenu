@@ -23,7 +23,7 @@ class ProductFactory extends Factory
             'weight' => $this->faker->numberBetween(1, 20),
             'description' => $this->faker->sentence,
             'image' => $this->faker->imageUrl($width = 200, $height = 120),
-            'slug' => $this->faker->slug
+            'slug' => $this->faker->slug(max([1,1]))
         ];
     }
 }
