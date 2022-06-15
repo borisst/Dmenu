@@ -67,8 +67,19 @@ class Menu extends Model
 //            ->whereNull('menu_product.deleted_at')
             ->withTimestamps()
             ->with('category:id,name,image')
-            ->withPivot(['deleted_at', 'user_id']);
+            ->withPivot(['deleted_at']);
 
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(
+            Category::class,
+            'menu_product',
+            'menu_id',
+            'category_id'
+        )
+            ->distinct();
     }
 
     /**

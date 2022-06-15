@@ -39,12 +39,6 @@ class TestingSeeder extends Seeder
             Company::factory()->create(['name' => $company]);
         }
 
-        $menus = ['City Pub cafe', 'City Pub special', 'Refresh cafe', 'Refresh special'];
-
-        foreach ($menus as $menu) {
-            Menu::factory()->create(['name' => $menu]);
-        }
-
         $categories = ['coffee', 'beer', 'appetizers', 'alcohol-free', 'fresh juice'];
 
         foreach ($categories as $category) {
@@ -54,23 +48,80 @@ class TestingSeeder extends Seeder
         $coffees = ['espresso', 'fredo espresso', 'cold espresso', 'macchiato', 'fredo macchiato', 'small macchiatto'];
 
         foreach ($coffees as $coffee) {
-            Product::factory()->create(['name' => $coffee]);
+            Product::factory()->create(['name' => $coffee, 'category_id' => 1]);
         }
 
         $beers = ['Skopsko', 'Zlaten Dab', 'Pilsner', 'Amstel', 'Heineken'];
 
         foreach ($beers as $beer) {
-            Product::factory()->create(['name' => $beer]);
-
+            Product::factory()->create(['name' => $beer, 'category_id' => 2]);
         }
 
         $appetizers = ['peanuts', 'walnuts', 'almonds', 'cheese'];
 
         foreach ($appetizers as $appetizer) {
-            Product::factory()->create(['name' => $appetizer]);
-
+            Product::factory()->create(['name' => $appetizer, 'category_id' => 3]);
         }
 
+        $cityPubMenus = ['City Pub cafe', 'City Pub special'];
+
+//        foreach ($menus as $menu) {
+//            Menu::factory()->create(['name' => $menu]);
+//        }
+
+        foreach ($cityPubMenus as $menu) {
+            /** @var Menu $menuRecord */
+            $menuRecord = Menu::factory()->create(['name' => $menu, 'company_id' => 1]);
+
+            foreach (Product::all()->where('category_id', '1') as $product) {
+                $menuRecord->categories()->attach(Category::all()->where('id', '1'), [
+                    'product_id' => $product->id,
+                    'price' => random_int(1000, 9999)
+                ]);
+            }
+
+            foreach (Product::all()->where('category_id', '2') as $product) {
+                $menuRecord->categories()->attach(Category::all()->where('id', '2'), [
+                    'product_id' => $product->id,
+                    'price' => random_int(1000, 9999)
+                ]);
+            }
+
+            foreach (Product::all()->where('category_id', '3') as $product) {
+                $menuRecord->categories()->attach(Category::all()->where('id', '3'), [
+                    'product_id' => $product->id,
+                    'price' => random_int(1000, 9999)
+                ]);
+            }
+        }
+
+        $refreshCafeMenus = ['Refresh cafe', 'Refresh special'];
+
+        foreach ($refreshCafeMenus as $menu) {
+            /** @var Menu $menuRecord */
+            $menuRecord = Menu::factory()->create(['name' => $menu, 'company_id' => 2]);
+
+            foreach (Product::all()->where('category_id', '1') as $product) {
+                $menuRecord->categories()->attach(Category::all()->where('id', '1'), [
+                    'product_id' => $product->id,
+                    'price' => random_int(1000, 9999)
+                ]);
+            }
+
+            foreach (Product::all()->where('category_id', '2') as $product) {
+                $menuRecord->categories()->attach(Category::all()->where('id', '2'), [
+                    'product_id' => $product->id,
+                    'price' => random_int(1000, 9999)
+                ]);
+            }
+
+            foreach (Product::all()->where('category_id', '3') as $product) {
+                $menuRecord->categories()->attach(Category::all()->where('id', '3'), [
+                    'product_id' => $product->id,
+                    'price' => random_int(1000, 9999)
+                ]);
+            }
+        }
 
     }
 }
