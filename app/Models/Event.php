@@ -9,5 +9,6 @@ use Illuminate\Support\Facades\Auth;
 class Event extends Model
 {
     protected $guarded =[];
+
     use HasFactory;
 }

@@ -19,7 +19,7 @@ class CityFactory extends Factory
     {
         return [
             'name' => $this->faker->city,
-            'slug' => $this->faker->slug
+            'slug' => $this->faker->slug(max([1,1]))
         ];
     }
 }

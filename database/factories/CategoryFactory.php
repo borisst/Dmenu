@@ -18,7 +18,8 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'image' => $this->faker->imageUrl($width = 200, $height = 120)
+            'image' => $this->faker->imageUrl($width = 200, $height = 120),
+            'slug' => $this->faker->slug(max([1,1]))
 
         ];
     }

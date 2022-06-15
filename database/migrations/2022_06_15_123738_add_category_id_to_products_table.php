@@ -14,8 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('category');
-            $table->string('slug')->nullable();
+            $table->foreignId('category_id')->nullable()->references('id')->on('categories');
         });
     }
 
@@ -27,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            Schema::dropIfExists('products');
+            //
         });
     }
 };

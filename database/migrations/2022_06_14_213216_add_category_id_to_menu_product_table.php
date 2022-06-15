@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('menus', function (Blueprint $table) {
-            $table->foreignId('user_id')->references('id')->on('users');
+        Schema::table('menu_product', function (Blueprint $table) {
+            $table->foreignId('category_id')->after('product_id')->references('id')->on('categories');
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('menus', function (Blueprint $table) {
-            Schema::dropIfExists('menus');
+        Schema::table('menu_product', function (Blueprint $table) {
+            Schema::dropIfExists('menu_product');
         });
     }
 };

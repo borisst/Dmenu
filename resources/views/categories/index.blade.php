@@ -5,7 +5,7 @@
         <div class="container mx-auto flex flex-wrap">
             <div class="flex flex-wrap place-content-center w-full text-orange-300 px-10 py-8 mb-2 bg-black">
                 <div>
-                    <img class="object-fill w-full h-12" src="https://dummyimage.com/100" alt="Company Name">
+                    <img class="object-fill w-full h-12" src="{{$company->logo}}" alt="Company Name">
                 </div>
             </div>
         </div>
