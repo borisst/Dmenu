@@ -45,10 +45,30 @@ class TestingSeeder extends Seeder
             Menu::factory()->create(['name' => $menu]);
         }
 
-        $categories = ['coffee', 'hot drinks', 'beer', 'alcohol-free', 'fresh juice'];
+        $categories = ['coffee', 'beer', 'appetizers', 'alcohol-free', 'fresh juice'];
 
         foreach ($categories as $category) {
             Category::factory()->create(['name' => $category]);
+        }
+
+        $coffees = ['espresso', 'fredo espresso', 'cold espresso', 'macchiato', 'fredo macchiato', 'small macchiatto'];
+
+        foreach ($coffees as $coffee) {
+            Product::factory()->create(['name' => $coffee]);
+        }
+
+        $beers = ['Skopsko', 'Zlaten Dab', 'Pilsner', 'Amstel', 'Heineken'];
+
+        foreach ($beers as $beer) {
+            Product::factory()->create(['name' => $beer]);
+
+        }
+
+        $appetizers = ['peanuts', 'walnuts', 'almonds', 'cheese'];
+
+        foreach ($appetizers as $appetizer) {
+            Product::factory()->create(['name' => $appetizer]);
+
         }
 
 
