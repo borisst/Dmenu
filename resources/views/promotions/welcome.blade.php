@@ -14,7 +14,7 @@
                 <div class="container px-2 mx-auto flex flex-wrap">
 
                     <div class="flex flex-wrap w-full relative mb-2 bg-black">
-                        <p><img class="object-fill w-full" src="{{asset('../images/' . $promotion->image)}}" alt=""/></p>
+                        <p><img class="object-fill w-full" src="{{$promotion->image}}" alt=""/></p>
 
                         <div class="grid grid-flow-row-dense grid-cols-12">
 

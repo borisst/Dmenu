@@ -5,8 +5,10 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Company;
+use App\Models\Event;
 use App\Models\Menu;
 use App\Models\Product;
+use App\Models\Promotion;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -123,5 +125,19 @@ class TestingSeeder extends Seeder
             }
         }
 
+        $events = ['Hotline', 'Nokaut'];
+
+        foreach ($events as $event) {
+            Event::factory()->create(['name' => $event]);
+        }
+
+        $promotions = ['Cocktail Party', 'Beer Party'];
+
+        foreach ($promotions as $promotion) {
+            Promotion::factory()->create(['name' => $promotion]);
+        }
+
     }
+
+
 }
