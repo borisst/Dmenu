@@ -62,6 +62,8 @@ class CompanyController extends Controller
 
     public function edit(Company $company)
     {
+        $this->authorize('update', $company);
+
         return view('companies.update', [
             'company' => $company
         ]);
@@ -74,9 +76,7 @@ class CompanyController extends Controller
      */
     public function update(Company $company)
     {
-        $attributes = request()->validate([
-            'name' => 'required'
-        ]);
+        $this->authorize('update', $company);
 
         try {
             Company::whereId($company->id)
@@ -94,6 +94,8 @@ class CompanyController extends Controller
 
     public function delete(Company $company)
     {
+        $this->authorize('delete', $company);
+
         return view('companies.destroy', [
             'company' => $company
         ]);
@@ -106,6 +108,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
+        $this->authorize('delete', $company);
 
         try {
             $company->delete();

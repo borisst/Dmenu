@@ -1,7 +1,6 @@
 <?php
 
 
-
 use App\Http\Controllers\CategoryController;
 
 use App\Http\Controllers\EventController;
@@ -25,16 +24,16 @@ Route::get('/dashboard', function () {
 require __DIR__ . '/auth.php';
 
 Route::get('menus/{menu}/qrcode', [QrCodeController::class, 'viewQrCode']);
-Route::get('companies/{company}/events',[EventController::class,'welcome'])->name('events.welcome');
+Route::get('companies/{company}/events', [EventController::class, 'welcome'])->name('events.welcome');
 
 Route::controller(EventController::class)->middleware('auth')->group(function () {
-    Route::get('events', [EventController::class,'index'])->name('events');
-    Route::get('events/create',[EventController::class,'create'])->name('events.create');
-    Route::post('events',[EventController::class,'store'])->name('events.store');
-    Route::get('events/{event}',[EventController::class,'show'])->name('events.show');
-    Route::get('events/{event}/edit',[EventController::class,'edit'])->name('events.edit');
-    Route::patch('events/{event}',[EventController::class,'update'])->name('events.update');
-    Route::delete('events/{event}',[EventController::class,'destroy'])->name('events.delete');
+    Route::get('events', [EventController::class, 'index'])->name('events');
+    Route::get('events/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('events', [EventController::class, 'store'])->name('events.store');
+    Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
+    Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+    Route::patch('events/{event}', [EventController::class, 'update'])->name('events.update');
+    Route::delete('events/{event}', [EventController::class, 'destroy'])->name('events.delete');
 });
 
 Route::get('companies/{company}/promotions',[PromotionController::class,'welcome'])->name('promotions.welcome');

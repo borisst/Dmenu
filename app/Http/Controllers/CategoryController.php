@@ -12,11 +12,17 @@ class CategoryController extends Controller
 {
     public function index(Company $company, Menu $menu)
     {
-//dd($menu->id);
         return view('categories.index', [
             'company' => $company,
             'categories' => $menu->products()->get()->pluck('category')->unique()
         ]);
+    }
+
+    public function show(Company $company, Category $category)
+    {
+     return view('categories.show', [
+         'products' => $category->products()
+     ]);
     }
 
     public function create()

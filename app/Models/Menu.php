@@ -23,11 +23,6 @@ class Menu extends Model
      */
     protected $guarded = [];
 
-    public function owner()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     /**
      * Return only user-owned menus.
      * @param $query

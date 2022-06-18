@@ -33,7 +33,7 @@ class MenuController extends Controller
      * @param Menu $menu
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($city, $company, Menu $menu)
+    public function show($company, Menu $menu)
     {
         return view('menus.show', [
             'menu' => $menu,
@@ -58,6 +58,7 @@ class MenuController extends Controller
         if (!auth()->hasUser()) {
             abort(403, 'Forbidden');
         }
+
         $attributes = request()->validate([
             'name' => 'required',
             'company_id' => 'required',
@@ -84,9 +85,7 @@ class MenuController extends Controller
 
     public function edit(Menu $menu)
     {
-        if (!$menu->company()->whereRelation('owner', 'owner', Auth::id())) {
-            abort(403, 'Choose another menu');
-        }
+        $this->authorize('update', $menu);
 
         return view('menus.edit', [
             'menu' => $menu,
@@ -101,9 +100,7 @@ class MenuController extends Controller
      */
     public function update(Menu $menu, Request $request)
     {
-        if (!$menu->company()->whereRelation('owner', 'owner', Auth::id())) {
-            abort(403, 'Choose another menu');
-        }
+        $this->authorize('update', $menu);
 
         $request->validate([
             'name' => '',
@@ -126,9 +123,7 @@ class MenuController extends Controller
 
     public function delete(Menu $menu)
     {
-        if (!$menu->company()->whereRelation('owner', 'owner', Auth::id())) {
-            abort(403, 'Choose another menu');
-        }
+        $this->authorize('delete', $menu);
 
         return view('menus.delete', [
             'menu' => $menu
@@ -142,9 +137,7 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        if (!$menu->company()->whereRelation('owner', 'owner', Auth::id())) {
-            abort(403, 'Choose another menu');
-        }
+        $this->authorize('delete', $menu);
 
         try {
             $menu->delete();

@@ -48,6 +48,8 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+        $this->authorize('view', $product);
+
         return view('products.show', [
             'product' => $product
         ]);
@@ -55,19 +57,19 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        if (Auth::id() !== $product->user_id) {
-            return abort(404);
-        } else {
-            return view('products.edit', [
-                'product' => Product::owned()->first()
-            ]);
-        }
+        $this->authorize('update', $product);
+
+        return view('products.edit', [
+            'product' => Product::owned()->first()
+        ]);
 
 
     }
 
     public function update(Product $product)
     {
+        $this->authorize('update', $product);
+
         try {
             $product->update([
                 'name' => request('name'),
@@ -88,6 +90,8 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->authorize('delete', $product);
+
         $product->delete();
         return redirect()->back()->with(['success', 'Product deleted successfully']);
     }
