@@ -11,20 +11,22 @@ class PromotionController extends Controller
 
     public function index()
     {
-        return view('promotions.index',[
-           'promotions' => Promotion::all()
+        return view('promotions.index', [
+            'promotions' => Promotion::all()
         ]);
     }
-    public function welcome(Company $company){
-        return view('promotions.welcome',[
-           'promotions' => Promotion::all(),
-           'company' => $company
+
+    public function welcome(Company $company)
+    {
+        return view('promotions.welcome', [
+            'promotions' => Promotion::all(),
+            'company' => $company
         ]);
     }
 
     public function create()
     {
-        return view('promotions.create',[
+        return view('promotions.create', [
             'companies' => Company::owned()->get()
         ]);
     }
@@ -41,9 +43,9 @@ class PromotionController extends Controller
                 'date' => request('date')
             ]);
             $promotion->save();
-            return redirect()->back()->with('success','Promotion added successfully');
-        }catch(\Exception $e){
-            return redirect()->back()->with('error','Please try again');
+            return redirect()->back()->with('success', 'Promotion added successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Please try again');
         }
 
     }
@@ -51,15 +53,16 @@ class PromotionController extends Controller
 
     public function show(Promotion $promotion)
     {
-        return view('promotions.show',[
+        return view('promotions.show', [
             'promotion' => $promotion,
         ]);
     }
 
     public function edit(Promotion $promotion)
     {
+        $this->authorize('update', $promotion);
 
-        return view('promotions.edit',[
+        return view('promotions.edit', [
             'promotion' => $promotion,
             'companies' => Company::owned()->get()
         ]);
@@ -68,6 +71,8 @@ class PromotionController extends Controller
 
     public function update(Promotion $promotion)
     {
+        $this->authorize('update', $promotion);
+
         try {
             $promotion->update([
                 'company_id' => request('company_id'),
@@ -77,17 +82,19 @@ class PromotionController extends Controller
                 'price' => request('price'),
                 'date' => request('date')
             ]);
-            return redirect()->back()->with('success','Promotion updated successfully');
-        }catch(\Exception $e){
-            return redirect()->back()->with('error','Please try again');
+            return redirect()->back()->with('success', 'Promotion updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Please try again');
         }
     }
 
 
     public function destroy(Promotion $promotion)
     {
+        $this->authorize('delete', $promotion);
+
         $promotion->delete();
-        return redirect()->back()->with('message','Promotion deleted');
+        return redirect()->back()->with('message', 'Promotion deleted');
 
     }
 }

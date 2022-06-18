@@ -28,7 +28,7 @@ class EventController extends Controller
 
     public function create()
     {
-       return view('events.create');
+        return view('events.create');
     }
 
 
@@ -42,7 +42,7 @@ class EventController extends Controller
             ]);
             $event->save();
             return redirect()->back()->with(['success' => 'Event inserted successfully']);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error' => 'Please try again']);
         }
     }
@@ -50,13 +50,15 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
-        return view('events.show',[
-           'event' => $event
+        return view('events.show', [
+            'event' => $event
         ]);
     }
 
     public function edit(Event $event)
     {
+        $this->authorize('update', $event);
+
         return view('events.edit', [
             'event' => $event
         ]);
@@ -65,14 +67,16 @@ class EventController extends Controller
 
     public function update(Event $event)
     {
+        $this->authorize('update', $event);
+
         try {
             $event->update([
                 'name' => request('name'),
                 'image' => ImageController::getImage(),
                 'date' => request('date')
             ]);
-            return redirect()->back()->with(['success' , 'Event successfully updated']);
-        }catch(\Exception $e){
+            return redirect()->back()->with(['success', 'Event successfully updated']);
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error', 'Please try again']);
         }
     }
@@ -80,6 +84,8 @@ class EventController extends Controller
 
     public function destroy(Event $event)
     {
+        $this->authorize('delete', $event);
+
         $event->delete();
         return redirect()->back()->with(['message', 'Event deleted']);
     }
