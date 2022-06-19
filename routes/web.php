@@ -49,8 +49,11 @@ Route::controller(PromotionController::class)->middleware('auth')->group(functio
     Route::delete('promotions{promotion}',[PromotionController::class,'destroy'])->name('promotions.delete');
 });
 
+
 Route::controller(ProductController::class)->middleware('auth')->group(function () {
-    Route::get('products', [ProductController::class, 'index'])->name('products');
+
+    Route::get('/{menu}/{category}/products', [ProductController::class, 'welcome'])->name('products.welcome');
+    Route::get('products',[ProductController::class,'index'])->name('products');
     Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('products', [ProductController::class, 'store'])->name('products.store');
     Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
@@ -87,4 +90,10 @@ Route::controller(MenuController::class)->middleware('auth')->group(function () 
 Route::get('/{city:slug}/{company:slug}/{menu}', [MenuController::class, 'show'])->name('menus-menu.show');
 
 Route::get('/{company:slug}/{menu:slug}', [CategoryController::class, 'index'])->name('category.index');
-Route::get('/{company:slug}/{category:slug}', [CategoryController::class, 'show'])->name('company-category.show');
+
+
+/**
+    *This route wasn't functional before. It was intended for listing products by their category.
+    *There is a functional and updated route called -> (products.welcome)
+    * Route::get('/{company:slug}/{category:slug} ', [CategoryController::class, 'show'])->name('company-category.show');
+    */

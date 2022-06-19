@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\Menu;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -15,7 +16,8 @@ class CategoryController extends Controller
 //dd($menu->id);
         return view('categories.index', [
             'company' => $company,
-            'categories' => $menu->products()->get()->pluck('category')->unique()
+            'categories' => $menu->products()->get()->pluck('category')->unique(),
+            'menu' => $menu,
         ]);
     }
 

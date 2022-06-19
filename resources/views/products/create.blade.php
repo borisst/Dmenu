@@ -21,7 +21,19 @@
     <label class="text-white" for="image">Upload an Image</label><br>
     <input class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="file" name="image"> <br>
 
+        <label class="text-white" for="category_id">Category</label><br>
+    <select name="category_id"> <br>
+        @foreach($categories as $category)
+            <option class="rounded w-max block"
+                    value="{{$category->id}}">{{$category->name}}</option>
+        @endforeach
+    </select> <br>
+
+
     <input class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="submit">
+
+
+
 
     @if(session()->has('success'))
         <p class="text-blue-600">{{ session('success') }}</p>

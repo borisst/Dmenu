@@ -18,7 +18,7 @@
                         <img class="object-fill" src="{{$category->image}}" alt="">
                     </div>
                     <div class="pl-5 z-10 w-full">
-                        <a href="{{route('company-category.show', ['category' => $category->id, 'company' => $company])}}"
+                        <a href="{{route('products.welcome' ,['menu' => $menu->id ,'category' => $category->id])}}"
                            class="text-orange-200 capitalize">{{$category->name}}</a>
                     </div>
                 </div>

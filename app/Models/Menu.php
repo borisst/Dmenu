@@ -16,7 +16,6 @@ class Menu extends Model
 
     protected $table = 'menus';
 
-
     /**
      * The attributes that are not mass assignable.
      * @var array<int, string>
@@ -67,7 +66,7 @@ class Menu extends Model
 //            ->whereNull('menu_product.deleted_at')
             ->withTimestamps()
             ->with('category:id,name,image')
-            ->withPivot(['deleted_at']);
+            ->withPivot(['price','deleted_at']);
 
     }
 
