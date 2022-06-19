@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\ProductRequest;
+use App\Models\Category;
 use App\Models\Company;
+use App\Models\Menu;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,17 +14,25 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-
-    public function index()
-    {
-        return view('products.index', [
+    public function index(){
+        return view('products.welcome',[
             'products' => Product::all()
         ]);
     }
-
+    public function welcome(Menu $menu,Category $category)
+    {
+        return view('products.index', [
+            'products' =>  $menu->products()->where('products.category_id',$category->id)->get(),
+            'menu' => $menu,
+            'category' => $category,
+            'company' => $menu->company()->first(),
+            ]);
+    }
     public function create()
     {
-        return view('products.create');
+        return view('products.create',[
+            'categories' => Category::all()
+        ]);
     }
 
 
@@ -37,7 +47,7 @@ class ProductController extends Controller
                 'description' => request('description'),
                 'image' => ImageController::getImage(),
                 'user_id' => Auth::id(),
-                'category_id' => 1 // TODO add category dropdown in view
+                'category_id' => request('category_id') //  added category dropdown in view
             ]);
             $product->save();
             return redirect()->back()->with(['success' => 'Product inserted successfully']);
