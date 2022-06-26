@@ -35,14 +35,13 @@ class Product extends Model
      *
      * Retrieves ALL records (active and soft deleted ones)
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function menusWithTrashed()
-    {
-        return $this->belongsToMany(Menu::class, 'menu_product', 'product_id', 'menu_id')
-            ->withTimestamps()
-            ->withPivot(['deleted_at']);
-    }
+//    public function menusWithTrashed()
+//    {
+//        return $this->belongsToMany(Menu::class, 'menu_product', 'product_id', 'menu_id')
+//            ->withTimestamps()
+//            ->withPivot(['deleted_at']);
+//    }
 
     public function user()
     {

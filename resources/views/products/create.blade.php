@@ -1,48 +1,56 @@
 <x-app-layout>
-    <x-slot name="header">
-    </x-slot>
+    <div class="flex flex-wrap space-y-5 mx-auto relative justify-center">
+        <div class="md:relative fixed md:py-2 py-3 px-10 rounded-b-lg w-full bg-green-300">
+            navbar goes here
+        </div>
 
-    <section class="flex justify-center">
-    <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 p-5">
-        <p class="text-center text-xl text-white">Add product</p>
+        <div class="flex flex-wrap justify-center md:space-y-5 space-y-10">
+            <div class="rounded-lg md:shadow-lg md:p-3 mx-auto">
+                <p class="md:contents hidden md:text-lg text-sm">Enter Product Details</p>
+            </div>
 
-    <form action="{{route('products.store')}}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('POST')
-    <label class="text-white" for="name">Name:</label><br>
-    <input class="block w-full p-2 text-white border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="name" name="name"><br>
+            <div class="w-full rounded-lg border-2 border-gray-200 shadow-lg p-5">
+                <form action="{{route('products.store')}}" method="POST">
+                    @csrf
+                    @method('POST')
 
-    <label class="text-white" for="weight">Weight</label><br>
-    <input class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="weight" name="weight"><br>
+                    <div class="flex flex-col justify-center space-y-2">
+                        <div class="mx-15">
+                            <label for="name" class="block">Product Name</label>
+                            <input id="name" type="text" name="name" value="" class="w-2/3 px-2 p-1 rounded-lg capitalize mt-2">
+                        </div>
 
-    <label class="text-white" for="description">Description</label><br>
-    <input class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="description" name="description"><br>
+                        <div>
+                            <label for="weight" class="block">Weight</label>
+                            <input id="weight" type="number" name="weight" value="" class="w-2/3 px-2 p-1 rounded-lg mt-2">
+                        </div>
 
-    <label class="text-white" for="image">Upload an Image</label><br>
-    <input class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="file" name="image"> <br>
+                        <div>
+                            <label for="image" class="block">Image</label>
+                            <input id="image" type="file" name="image" value="" class="w-full px-2 p-1 rounded-lg mt-2">
+                        </div>
 
-        <label class="text-white" for="category_id">Category</label><br>
-    <select name="category_id"> <br>
-        @foreach($categories as $category)
-            <option class="rounded w-max block"
-                    value="{{$category->id}}">{{$category->name}}</option>
-        @endforeach
-    </select> <br>
+                        <div>
+                            <label for="category" class="block">Category</label>
+                            <select id="category"  name="category_id" class="w-2/3 px-2 p-1 rounded-lg capitalize bg-white mt-2">
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}">{{ucfirst($category->name)}}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
+                        <div>
+                            <label for="description" class="block">Description</label>
+                            <textarea rows="5" cols="20" id="description"   name="description" class="w-full px-2 p-1 rounded-lg mt-2"></textarea>
+                        </div>
+                    </div>
 
-    <input class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="submit">
-
-
-
-
-    @if(session()->has('success'))
-        <p class="text-blue-600">{{ session('success') }}</p>
-    @endif
-    @if(session()->has('error'))
-        <p class="text-red-600">{{ session('error') }}</p>
-    @endif
-
-</form>
+                    <div class="flex justify-end space-x-4 mt-3">
+                        <a href="{{url()->previous()}}" class="rounded-lg shadow-lg px-2 py-1 border-2 bg-white border-red-400">Cancel</a>
+                        <button class="rounded-lg shadow-lg px-2 py-1 border-2 bg-white border-green-400" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    </section>
 </x-app-layout>

@@ -19,6 +19,8 @@ class EventFactory extends Factory
     {
         return [
             'name' => $this->faker->title(max([1,2])),
+            'description' => $this->faker->text,
+            'user_id' => 1,
             'image' => $this->faker->imageUrl($width = 200, $height = 120),
             'date' => $this->faker->date,
             'company_id' => Company::all()->random()->id

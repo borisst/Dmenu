@@ -5,10 +5,10 @@
 
         </h2>
     </x-slot>
-    @auth()
-        <x-sidebar>
+{{--    @auth()--}}
+{{--        <x-sidebar>--}}
 
-        </x-sidebar>
-    @endauth
+{{--        </x-sidebar>--}}
+{{--    @endauth--}}
 
 </x-app-layout>

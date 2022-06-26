@@ -1,58 +1,51 @@
 <x-app-layout>
-    <x-slot name="header">
-    </x-slot>
+    <div class="flex flex-wrap space-y-5 mx-auto relative justify-center">
+        <div class="md:relative fixed md:py-2 py-3 px-10 rounded-b-lg w-full bg-green-300">
+            navbar goes here
+        </div>
 
+        <div class="flex flex-wrap justify-center md:space-y-5 space-y-10">
+            <div class="rounded-lg md:shadow-lg md:p-3 mx-auto">
+                <p class="md:contents hidden md:text-lg text-sm">Enter Menu Details</p>
+            </div>
 
-    <!-- Snippet -->
-    <section class="flex flex-col justify-center antialiased bg-gray-100 text-gray-600 min-h-screen p-4">
-        <div class="h-full">
-            <!-- Table -->
-            <div class="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
-                <header class="px-5 py-4 border-b border-gray-100">
-                    <h2 class="text-center  font-semibold text-gray-800">Create new Menu</h2>
-                </header>
-                <div class="p-3">
-                    <div class="overflow-x-auto">
-                        <table class="table-auto w-full">
-                            <thead class="text-xs font-semibold uppercase text-gray-400">
-                            <tr>
-                                <th class="p-2">
-                                </th>
-                                <th class="p-2">
-                                </th>
-                                <th class="p-2">
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody class="text-sm divide-y divide-gray-100">
-                            <form action="{{route('menus-menu.store')}}" method="POST">
-                                @csrf
-                                @method('POST')
-                                <tr>
-                                    <td class="p-2">
-                                        <label for="name">Name</label>
-                                        <input type="text" name="name" id="name" class="rounded block h-6">
-                                    </td>
-                                    <td class="p-2">
-                                        <label for="company">Company</label>
-                                        <select class="rounded w-full block" name="company_id" id="company">
-                                            @foreach($companies as $company)
-                                                <option class="rounded w-max block" value="{{$company->id}}">{{$company->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    Choose company logo <br>
-                                    <input type="file" name="logo">
-                                    <td class="p-2">
-                                        <button type="submit">Save</button>
-                                    </td>
-                                </tr>
-                            </form>
-                            </tbody>
-                        </table>
+            <div class="w-full rounded-lg border-2 border-gray-200 shadow-lg p-5">
+                <form action="{{route('menus-menu.store')}}" method="POST">
+                    @csrf
+                    @method('POST')
+
+                    <div class="flex flex-col justify-center space-y-2">
+                        <div class="mx-15">
+                            <label for="name" class="block">Menu Name</label>
+                            <input id="name" type="text" name="name" value=""
+                                   class="w-2/3 px-2 p-1 rounded-lg capitalize mt-2">
+                        </div>
+
+                        <div>
+                            <label for="logo" class="block">Image</label>
+                            <input id="logo" type="file" name="logo" class="w-full px-2 p-1 rounded-lg mt-2">
+                        </div>
+
+                        <div>
+                            <label for="company" class="block">Company</label>
+                            <select id="company" name="company_id"
+                                    class="w-2/3 px-2 p-1 rounded-lg capitalize bg-white mt-2">
+                                @foreach($companies as $company)
+                                    <option value="{{$company->id}}">{{ucfirst($company->name)}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="flex justify-end space-x-4 mt-3">
+                        <a href="{{url()->previous()}}"
+                           class="rounded-lg shadow-lg px-2 py-1 border-2 bg-white border-red-400">Cancel</a>
+                        <button class="rounded-lg shadow-lg px-2 py-1 border-2 bg-white border-green-400" type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
 </x-app-layout>

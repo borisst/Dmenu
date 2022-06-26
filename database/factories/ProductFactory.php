@@ -21,6 +21,7 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->word,
             'weight' => $this->faker->numberBetween(1, 20),
+            'user_id' => 1,
             'description' => $this->faker->sentence,
             'image' => $this->faker->imageUrl($width = 200, $height = 120),
             'slug' => $this->faker->slug(max([1,1]))

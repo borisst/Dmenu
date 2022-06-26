@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,11 +13,9 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('menu_product', function (Blueprint $table) {
-
-            $table->foreignId('menu_id')->after('id')->references('id')->on('menus');
-            $table->decimal('price', 9, 2)->after('product_id');
-
+        Schema::table('promotions', function (Blueprint $table) {
+            $table->string('description')->after('name')->nullable();
+            $table->softDeletes()->nullable();
         });
     }
 
@@ -27,6 +26,8 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('menu_product');
+        Schema::table('promotions', function (Blueprint $table) {
+            $table->dropColumn('description');
+        });
     }
 };

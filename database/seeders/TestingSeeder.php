@@ -73,7 +73,7 @@ class TestingSeeder extends Seeder
 
         foreach ($cityPubMenus as $menu) {
             /** @var Menu $menuRecord */
-            $menuRecord = Menu::factory()->create(['name' => $menu, 'company_id' => 1]);
+            $menuRecord = Menu::factory()->create(['name' => $menu, 'company_id' => 2]);
 
             foreach (Product::all()->where('category_id', '1') as $product) {
                 $menuRecord->categories()->attach(Category::all()->where('id', '1'), [
@@ -101,7 +101,7 @@ class TestingSeeder extends Seeder
 
         foreach ($refreshCafeMenus as $menu) {
             /** @var Menu $menuRecord */
-            $menuRecord = Menu::factory()->create(['name' => $menu, 'company_id' => 2]);
+            $menuRecord = Menu::factory()->create(['name' => $menu, 'company_id' => 1]);
 
             foreach (Product::all()->where('category_id', '1') as $product) {
                 $menuRecord->categories()->attach(Category::all()->where('id', '1'), [

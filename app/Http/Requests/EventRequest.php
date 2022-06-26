@@ -25,8 +25,10 @@ class EventRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'image' => 'required',
-            'date' => 'required'
+            'image' => 'nullable',
+            'date' => 'required',
+            'description' => 'nullable',
+            'company_id' => 'required'
         ];
     }
 }

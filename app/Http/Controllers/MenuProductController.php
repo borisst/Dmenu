@@ -35,11 +35,20 @@ class MenuProductController extends Controller
     public function attachProducts(Menu $menu)
     {
 
-        $products = request()->product;
+        $attributes = request()->validate([
+            'price' => 'required',
+            'category_id' => 'required'
+        ]);
 
+        $product = Product::find(request()->product);
+
+//        dd($attributes['price']);
         try {
-            $menu->products()->attach($products);
-            return redirect(route('menus'))->with('message', ['text' => 'Product(s) added!', 'type' => 'success']);
+            $menu->products()->attach($product->id, [
+                'category_id' => $attributes['category_id'],
+                'price' => $attributes['price']
+            ]);
+            return redirect()->back()->with('message', ['text' => 'Product(s) added!', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
