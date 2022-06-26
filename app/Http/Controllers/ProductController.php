@@ -14,23 +14,26 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public function index(){
-        return view('products.welcome',[
-            'products' => Product::all()
-        ]);
-    }
-    public function welcome(Menu $menu,Category $category)
+    public function index()
     {
         return view('products.index', [
-            'products' =>  $menu->products()->where('products.category_id',$category->id)->get(),
+            'products' => Product::owned()->get()
+        ]);
+    }
+
+    public function welcome(Menu $menu, Category $category)
+    {
+        return view('products.welcome', [
+            'products' => $menu->products()->where('products.category_id', $category->id)->get(),
             'menu' => $menu,
             'category' => $category,
             'company' => $menu->company()->first(),
-            ]);
+        ]);
     }
+
     public function create()
     {
-        return view('products.create',[
+        return view('products.create', [
             'categories' => Category::all()
         ]);
     }
@@ -58,10 +61,12 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $this->authorize('view', $product);
+//        $this->authorize('view', $product);
 
         return view('products.show', [
-            'product' => $product
+            'product' => $product,
+            'categories' => Category::all(),
+            'menus' => Menu::all()
         ]);
     }
 
@@ -70,9 +75,9 @@ class ProductController extends Controller
         $this->authorize('update', $product);
 
         return view('products.edit', [
-            'product' => Product::owned()->first()
+            'product' => Product::whereId($product->id)->with('category')->first(),
+            'categories' => Category::all()
         ]);
-
 
     }
 

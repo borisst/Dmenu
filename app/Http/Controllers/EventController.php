@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventRequest;
 use App\Models\Company;
 use App\Models\Event;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -28,19 +29,16 @@ class EventController extends Controller
 
     public function create()
     {
-        return view('events.create');
+        return view('events.create', [
+            'companies' => Company::owned()->get()
+        ]);
     }
 
 
     public function store(EventRequest $request)
     {
         try {
-            $event = Event::create([
-                'name' => request('name'),
-                'image' => ImageController::getImage(),
-                'date' => request('date')
-            ]);
-            $event->save();
+            auth()->user()->events()->create($request->validated());
             return redirect()->back()->with(['success' => 'Event inserted successfully']);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => 'Please try again']);
@@ -55,13 +53,45 @@ class EventController extends Controller
         ]);
     }
 
+    public function showPromotions(Event $event)
+    {
+        return view('events.show-promotions', [
+            'event' => $event,
+            'assignedPromotions' => $event->promotions()->get(),
+            'unassignedPromotions' => $event->promotions()->whereNull('event_id')->get(),
+            'company' => $event->company()->first()
+        ]);
+    }
+
     public function edit(Event $event)
     {
         $this->authorize('update', $event);
 
         return view('events.edit', [
-            'event' => $event
+            'event' => $event,
+            'companies' => Company::owned()->get()
         ]);
+    }
+
+    public function addPromotion(Event $event, Promotion $promotion)
+    {
+        $this->authorize('update', $event);
+
+        $attributes = request()->validate([
+            'date' => 'required',
+            'event_id' => 'required'
+        ]);
+
+        try {
+            Promotion::findOrFail($promotion->id)->update([
+                'date' => $attributes['date'],
+                'event_id' => $attributes['event_id']
+            ]);
+
+            return redirect()->back()->with('success', 'Promotion added successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Please try again');
+        }
     }
 
 
@@ -85,7 +115,7 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         $this->authorize('delete', $event);
-
+//        $event->promotions->each->delete();
         $event->delete();
         return redirect()->back()->with(['message', 'Event deleted']);
     }

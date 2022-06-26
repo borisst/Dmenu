@@ -21,9 +21,10 @@ class PromotionFactory extends Factory
     {
         return [
             'name' => $this->faker->title(max([1, 2])),
+            'description' => $this->faker->text(20),
             'image' => $this->faker->imageUrl($width = 200, $height = 120),
             'date' => $this->faker->date,
-            'company_id' => Company::all()->random()->id,
+            'company_id' => 1,
             'price' => random_int(1000, 9999),
             'event_id' => Event::all()->random()->id
 

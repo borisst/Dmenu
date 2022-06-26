@@ -24,7 +24,18 @@ class MenuController extends Controller
     {
         return view('menus.index', [
             'menus' => Menu::owned()->productsCount()->with('company.city')->get()
-//
+        ]);
+    }
+
+    public function  showProducts(Menu $menu)
+    {
+        $company = $menu->company()->first();
+
+        return view('menus.show-products', [
+            'assignedProducts' => $menu->products()->orderByPivot('category_id')->get(),
+            'unassignedProducts' => Product::whereDoesntHave('menus')->get(),
+            'menu' => $menu,
+            'company' => $company
         ]);
     }
 
@@ -33,7 +44,7 @@ class MenuController extends Controller
      * @param Menu $menu
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($company, Menu $menu)
+    public function show(Company $company, Menu $menu)
     {
         return view('menus.show', [
             'menu' => $menu,
@@ -59,11 +70,13 @@ class MenuController extends Controller
             abort(403, 'Forbidden');
         }
 
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'name' => 'required',
             'company_id' => 'required',
-            'slug' => ''
+            'logo' => 'file|required'
         ]);
+
+//        dd($attributes);
 
         try {
             Menu::create([
@@ -71,13 +84,14 @@ class MenuController extends Controller
                 'company_id' => request()->company_id,
                 'slug' => Str::slug(request()->name),
                 'qrcode' => $qrCodeController->storeQrCode(),
-                'company_logo' => $qrCodeController->storeQrCodeLogo()
+                'logo' => $qrCodeController->storeQrCodeLogo()
 
                 // TODO skips validation for now, need to fix
             ]);
 
-            return redirect(route('menus'))->with('message', ['text' => 'The menu has been created', 'type' => 'success']);
+            return redirect()->back()->with('message', ['text' => 'The menu has been created', 'type' => 'success']);
         } catch (\Exception $e) {
+            $e->getMessage();
             return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
 
@@ -141,8 +155,7 @@ class MenuController extends Controller
 
         try {
             $menu->delete();
-//            $menu->products()->delete();
-            return redirect(route('menus'))->with('message', ['text' => 'Menu removed!', 'type' => 'success']);
+            return redirect()->back()->with('message', ['text' => 'Menu removed!', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }

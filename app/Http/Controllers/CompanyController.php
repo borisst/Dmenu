@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Company;
+use App\Models\Event;
+use App\Models\Menu;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -17,9 +22,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-
         return view('companies.index', [
-            'companies' => Company::all()
+            'companies' => Company::owned()->withCount('menus', 'promotions', 'events')->get()
         ]);
     }
 
@@ -31,9 +35,40 @@ class CompanyController extends Controller
         ]);
     }
 
+    public function showMenus(Company $company)
+    {
+        $menus = Menu::owned()->with('categories')->where('company_id', $company->id)->productsCount()->get();
+
+        return view('companies.show-menus', [
+            'menus' => $menus,
+            'company' => $company->withCount('promotions', 'events')->first()
+        ]);
+    }
+
+    public function showPromotions(Company $company)
+    {
+
+//        dd($company);
+        return view('companies.show-promotions', [
+            'assignedPromotions' => $company->promotions()->with('event')->get(),
+            'unassignedPromotions' => Promotion::where('company_id', $company->id)->whereNull('event_id')->get(),
+            'company' => $company
+        ]);
+    }
+
+    public function showEvents(Company $company)
+    {
+        return view('companies.show-events', [
+            'events' => $company->events()->promotionsCount()->get(),
+            'company' => $company
+        ]);
+    }
+
     public function create()
     {
-        return view('companies.create');
+        return view('companies.create', [
+            'cities' => City::all()
+        ]);
     }
 
     /**
@@ -45,19 +80,23 @@ class CompanyController extends Controller
         $user = auth()->user();
 
         $attributes = request()->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'city_id' => 'required',
+            'contact_number' => 'nullable',
+            'opens_at' => 'nullable',
+            'closes_at' => 'nullable',
+            'fb_link' => 'nullable',
+            'ig_link' => 'nullable'
         ]);
 
-        try {
-            $user->companies()->create([
-                'name' => request()->name,
-                'slug' => Str::slug(request()->name)
-            ]);
-            return redirect(route('companies-index'))->with('message', ['text' => 'Компанијата е успешно додадена', 'type' => 'success']);
-        } catch (\Exception $e) {
-            return redirect(route('companies-index'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
-        }
+//        dd($attributes);
 
+        try {
+            $user->companies()->create($attributes);
+            return redirect()->back()->with('message', ['text' => 'Company created!', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('message', ['text' => 'Try again!', 'type' => 'danger']);
+        }
     }
 
     public function edit(Company $company)
@@ -65,7 +104,8 @@ class CompanyController extends Controller
         $this->authorize('update', $company);
 
         return view('companies.update', [
-            'company' => $company
+            'company' => $company,
+            'cities' => City::all()
         ]);
     }
 
@@ -78,18 +118,27 @@ class CompanyController extends Controller
     {
         $this->authorize('update', $company);
 
+        $attributes = request()->validate([
+            'name' => 'nullable',
+            'city_id' => 'nullable',
+            'contact_number' => 'nullable',
+            'opens_at' => 'nullable',
+            'closes_at' => 'nullable',
+            'fb_link' => 'nullable',
+            'ig_link' => 'nullable'
+        ]);
+
         try {
             Company::whereId($company->id)
                 ->whereOwner(Auth::id())
-                ->update([
-                    'name' => $attributes->name,
-                    'slug' => Str::slug(request('name'))
-                ]);
-            return redirect(route('company-show', $company))->with('message', ['text' => 'Името е успешно променето!', 'type' => 'success']);
+                ->update($attributes);
+            return redirect()->back()->with('message', ['text' => 'Company updated!', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('company-show', $company))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
+            return redirect(route('company-show', $company))->with(
+                'message',
+                ['text' => 'Try again!!', 'type' => 'danger']
+            );
         }
-
     }
 
     public function delete(Company $company)
@@ -103,7 +152,7 @@ class CompanyController extends Controller
 
     /**
      * Deletes the company
-     * @param Company $company
+     * @param  Company  $company
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(Company $company)
@@ -112,10 +161,9 @@ class CompanyController extends Controller
 
         try {
             $company->delete();
-            return redirect(route('companies-index'))->with('message', ['text' => 'Компанијата е успешно променета!', 'type' => 'success']);
+            return redirect()->back()->with('message', ['text' => 'Company deleted!', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('companies-index'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
+            return redirect()->back()->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
-
     }
 }

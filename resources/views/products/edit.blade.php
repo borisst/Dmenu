@@ -1,35 +1,58 @@
 <x-app-layout>
-    <x-slot name="header">
-    </x-slot>
-    <section class="flex justify-center">
+    <div class="flex flex-wrap space-y-5 mx-auto relative justify-center">
+        <div class="md:relative fixed md:py-2 py-3 px-10 rounded-b-lg w-full bg-green-300">
+            navbar goes here
+        </div>
 
-    <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 p-5">
-    <p class="text-center text-xl text-white">Edit product</p>
-<form action="{{route('products.update',$product->id)}}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PATCH')
-    <label class="text-white" for="name">Name:</label><br>
-    <input class="block w-full p-2 text-white border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="name" name="name" value="{{$product->name}}"><br>
+        <div class="flex flex-wrap justify-center md:space-y-5 space-y-10">
+            <div class="rounded-lg md:shadow-lg md:p-3 mx-auto">
+                <p class="md:contents hidden md:text-lg text-sm">Editing
+                    <a href="{{route('products.show', $product)}}" class="text-blue-400 capitalize">{{$product->name}}</a>
+                </p>
+            </div>
 
-    <label class="text-white" for="weight">Weight</label><br>
-    <input class="block w-full p-2 text-white border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="weight" name="weight" value="{{$product->weight}}"><br>
+            <div class="w-full rounded-lg border-2 border-gray-200 shadow-lg p-5">
+                <form action="{{route('products.update', $product)}}" method="POST">
+                    @csrf
+                    @method('PATCH')
 
-    <label class="text-white" for="description">Description</label><br>
-    <input class="block w-full p-2 text-white border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="description" name="description" value="{{$product->description}}"><br>
+                    <div class="flex flex-col justify-center space-y-2">
+                        <div class="mx-15">
+                            <label for="name" class="block">Product Name</label>
+                            <input id="name" type="text" name="name" value="{{$product->name}}" class="w-2/3 px-2 p-1 rounded-lg capitalize mt-2">
+                        </div>
 
-    <div class="m-5 text-white p-6 max-w-sm bg-white rounded-lg border border-white shadow-md ">
+                        <div>
+                            <label for="weight" class="block">Weight</label>
+                            <input id="weight" type="number" name="weight" value="{{$product->weight}}" class="w-2/3 px-2 p-1 rounded-lg mt-2">
+                        </div>
 
-        <img class="h-10 w-10" src="{{asset('../images/' . $product->image)}}" alt="{{$product->name}}">
-        <input class="block w-full p-2 text-white border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="{{$product->image}}" type="file" name="image">
+                        <div>
+                            <label for="image" class="block">Image</label>
+                            <input id="image" type="file" name="image" value="{{$product->image}}" class="w-full px-2 p-1 rounded-lg mt-2">
+                        </div>
+
+                        <div>
+                            <label for="category" class="block">Category</label>
+                            <select id="category"  name="category_id" class="w-2/3 px-2 p-1 rounded-lg capitalize bg-white mt-2">
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}" @if($product->category_id == $category->id) selected @endif>{{ucfirst($category->name)}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="description" class="block">Description</label>
+                            <textarea rows="5" cols="20" id="description"   name="description" class="w-full px-2 p-1 rounded-lg mt-2">{{$product->description}}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-4 mt-3">
+                        <a href="{{url()->previous()}}" class="rounded-lg shadow-lg px-2 py-1 border-2 bg-white border-red-400">Cancel</a>
+                        <button class="rounded-lg shadow-lg px-2 py-1 border-2 bg-white border-green-400" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <input class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="submit">
-    <br>
-    @if(session()->has('success'))
-        <p class="text-blue-500">{{session('success')}}</p>
-    @endif
-</form>
-</div>
-    </section>
-
 </x-app-layout>

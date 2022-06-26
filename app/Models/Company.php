@@ -18,11 +18,20 @@ class Company extends Model
      */
     protected $guarded = [];
 
-    public function events(){
+
+    public function scopePromotionsCount($query)
+    {
+        return $query->withCount('promotions');
+    }
+
+    public function events()
+    {
         return $this->hasMany(Event::class);
     }
-    public function promotions(){
-        return $this->hasMany(Event::class);
+
+    public function promotions()
+    {
+        return $this->hasMany(Promotion::class);
     }
 
     public function owner()

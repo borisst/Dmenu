@@ -10,19 +10,19 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class QrCodeController extends Controller
 {
-    public function viewQrCode(Menu $menu){
-
-        $qrCode= $menu->qrcode;
-        $logo = $menu->company_logo;
-        $generateQr = QrCode::format('png')->merge('\public\logo\\' . $logo)->generate(request()->url());
+    public function viewQrCode(Menu $menu)
+    {
+        $qrCode = $menu->qrcode;
+        $logo = $menu->logo;
+        $generateQr = QrCode::format('png')->merge('\public\logo\\'.$logo)->generate(request()->url());
         return view('qrcode', compact('qrCode', 'generateQr'));
     }
 
     public function storeQrCodeLogo()
     {
-        if (request()->hasFile('logo')) {
+        if (request()->has('logo')) {
             $file = request()->file('logo');
-            $fileName = time() . '.png';
+            $fileName = time().'.png';
             $file->move('logo', $fileName);
             return $fileName;
         }
@@ -34,8 +34,8 @@ class QrCodeController extends Controller
             ->size(200)
             ->errorCorrection('H')
             ->generate(request()->url());
-        $path = '/images/qr-code/' . time() . '.png';
-        $output_file = time() . '.png';
+        $path = '/images/qr-code/'.time().'.png';
+        $output_file = time().'.png';
         Storage::disk('public')->put($path, $image);
         return $output_file;
     }
