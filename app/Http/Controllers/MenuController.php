@@ -70,9 +70,10 @@ class MenuController extends Controller
             abort(403, 'Forbidden');
         }
 
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'name' => 'required',
-            'company_id' => 'required'
+            'company_id' => 'required',
+            'logo' => 'file|required'
         ]);
 
 //        dd($attributes);
@@ -90,6 +91,7 @@ class MenuController extends Controller
 
             return redirect()->back()->with('message', ['text' => 'The menu has been created', 'type' => 'success']);
         } catch (\Exception $e) {
+            $e->getMessage();
             return redirect(route('menus'))->with('message', ['text' => 'Try again!', 'type' => 'danger']);
         }
 

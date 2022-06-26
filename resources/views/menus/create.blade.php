@@ -10,7 +10,7 @@
             </div>
 
             <div class="w-full rounded-lg border-2 border-gray-200 shadow-lg p-5">
-                <form action="{{route('menus-menu.store')}}" method="POST">
+                <form action="{{route('menus-menu.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
 

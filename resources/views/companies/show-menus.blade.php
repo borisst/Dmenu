@@ -51,7 +51,8 @@
                                 <?php
                                 $now = \Illuminate\Support\Carbon::now('UTC');
                                 ?>
-                                <p>@if ($now->isBefore($menu->closes_at))
+                                <p>
+                                    @if ($now->isBefore($company->closes_at))
                                         <span class="text-green-500">Open</span>
                                     @else
                                         {{--                                        NOT SETUP AS INTENDED--}}
