@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
     <!-- Styles -->
-    <script src="https://cdn.tailwindcss.com"></script>
+{{--    <script src="https://cdn.tailwindcss.com"></script>--}}
     {{--    <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>--}}
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
