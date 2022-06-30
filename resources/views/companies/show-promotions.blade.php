@@ -54,11 +54,15 @@
                             <p class="text-green-600">{{$promotion->date->diffForHumans()}}</p>
                         @endif
                     </td>
-
-                    <td class="w-full lg:w-auto pb-3 pt-5 text-gray-800 text-center md:text-left md:pl-4 border border-b block lg:table-cell relative lg:static ">
-                        <span
+                    @if(isset($promotion->event))
+                            <td class="w-full lg:w-auto pb-3 pt-5 text-gray-800 text-center md:text-left md:pl-4 border border-b block lg:table-cell relative lg:static ">
+                            <span
                                 class="lg:hidden absolute top-0 left-0 bg-gray-200 shadow-lg px-2 py-1 text-xs rounded-br-md font-bold uppercase">Event</span>
-                        {{$promotion->event->name}}</td>
+                            {{$promotion->event->name}}</td>
+                        @else
+                            N/A
+                    @endif
+
 
                     <td class="w-full lg:w-auto pb-3 pt-5 text-gray-800 text-center md:text-left md:pl-4 border border-b block lg:table-cell relative lg:static ">
                         <span

@@ -95,7 +95,6 @@ Route::post('menus/{menu}/attach', [MenuProductController::class, 'attachProduct
 
 Route::get('/{company:slug}/{menu:slug}', [CategoryController::class, 'index'])->name('category.index');
 
-
 /**
  *This route wasn't functional before. It was intended for listing products by their category.
  *There is a functional and updated route called -> (products.welcome)
