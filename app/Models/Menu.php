@@ -29,7 +29,7 @@ class Menu extends Model
      */
     public function scopeOwned($query)
     {
-        return $query->whereRelation('company', 'owner', Auth::id()); //checks if the menu's company is owned by auth user
+        return $query->whereRelation('company', 'owner_id', Auth::id()); //checks if the menu's company is owned by auth user
     }
 
     /**

@@ -56,7 +56,7 @@ class Company extends Model
      */
     public function scopeOwned($query)
     {
-        return $query->whereOwner(Auth::id());
+        return $query->whereOwnerId(Auth::id());
 
     }
 }
