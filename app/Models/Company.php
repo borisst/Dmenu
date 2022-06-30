@@ -36,7 +36,7 @@ class Company extends Model
 
     public function owner()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     public function menus()
@@ -56,7 +56,7 @@ class Company extends Model
      */
     public function scopeOwned($query)
     {
-        return $query->whereOwner(Auth::id());
+        return $query->whereOwnerId(Auth::id());
 
     }
 }

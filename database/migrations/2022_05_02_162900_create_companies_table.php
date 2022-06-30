@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('owner')->references('id')->on('users');
+            $table->foreignId('owner_id')->references('id')->on('users');
             $table->string('slug')->nullable();
             $table->softDeletes();
             $table->timestamps();

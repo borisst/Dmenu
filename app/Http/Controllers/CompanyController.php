@@ -39,9 +39,10 @@ class CompanyController extends Controller
     {
         $menus = Menu::owned()->with('categories')->where('company_id', $company->id)->productsCount()->get();
 
+//        dd($company)
         return view('companies.show-menus', [
             'menus' => $menus,
-            'company' => $company->withCount('promotions', 'events')->first()
+            'company' => Company::whereId($company->id)->withCount('promotions', 'events')->first()
         ]);
     }
 

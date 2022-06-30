@@ -20,7 +20,7 @@ class CompanyFactory extends Factory
     {
         return [
             'name' => $this->faker->company,
-            'owner' => User::all()->random()->id,
+            'owner_id' => User::all()->random()->id,
             'city_id' => City::all()->random()->id,
             'slug' => $this->faker->slug(max([1,1])),
             'contact_number' => $this->faker->phoneNumber,
