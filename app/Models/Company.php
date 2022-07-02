@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Mail\NoEvents;
+use App\Mail\NoPromotions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class Company extends Model
 {
@@ -57,6 +60,19 @@ class Company extends Model
     public function scopeOwned($query)
     {
         return $query->whereOwnerId(Auth::id());
+    }
 
+    public function sendPromotionReminder()
+    {
+        if ($this->promotions()->doesntExist()) {
+            Mail::to($this->owner->email)->send(new NoPromotions());
+        }
+    }
+
+    public function sendEventReminder()
+    {
+        if ($this->events()->doesntExist()) {
+            Mail::to($this->owner->email)->send(new NoEvents());
+        }
     }
 }

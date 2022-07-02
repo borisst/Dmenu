@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Mail\NoPromotions;
 use App\Models\Company;
 use App\Models\User;
+use App\Services\PromotionReminder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -31,25 +32,7 @@ class CheckForPromotions extends Command
      */
     public function handle(NoPromotions $noPromotions)
     {
-        if ($this->argument('company')) {
-//            $company = Company::where('id', $this->argument('company'))->first();
-            $company = Company::findOrFail($this->argument('company'));
-
-            if ($company->promotions()->doesntExist()) {
-                Mail::to($company->owner->email)->send(new NoPromotions());
-            }
-        }
-
-        else {
-            $companies = Company::all();
-            foreach ($companies as $company) {
-//                $owner = User::where('id', $company->owner)->first();
-
-                if ($company->promotions()->doesntExist()) {
-                    Mail::to($company->owner->email)->send(new NoPromotions());
-                }
-            }
-        }
+        (new PromotionReminder($this->argument('company')))->handle();
 
         return $this->info('Mails sent');
     }
