@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Mail\NoEvents;
 use App\Models\Company;
 use App\Models\User;
+use App\Services\EventReminder;
 use Illuminate\Console\Command;
 
 class CheckForEvents extends Command
@@ -30,24 +31,8 @@ class CheckForEvents extends Command
      */
     public function handle(NoEvents $noEvents)
     {
-        if ($this->argument('company')) {
-            $company = Company::where('id', $this->argument('company'))->first();
-            $owner = User::where('id', $company->owner)->first();
+        (new EventReminder($this->argument('company')))->handle();
 
-            if ($company->events()->doesntExist()) {
-                \Mail::to($owner->email)->send(new NoEvents());
-            }
-        }
-        else {
-            $companies = Company::all();
-            foreach ($companies as $company) {
-                $owner = User::where('id', $company->owner)->first();
-
-                if ($company->events()->doesntExist()) {
-                    \Mail::to($owner->email)->send(new NoEvents());
-                }
-            }
-        }
-        return 0;
+        return $this->info('Mails sent');
     }
 }

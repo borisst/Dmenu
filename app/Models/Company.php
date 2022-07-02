@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Mail\NoEvents;
 use App\Mail\NoPromotions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -65,6 +66,13 @@ class Company extends Model
     {
         if ($this->promotions()->doesntExist()) {
             Mail::to($this->owner->email)->send(new NoPromotions());
+        }
+    }
+
+    public function sendEventReminder()
+    {
+        if ($this->events()->doesntExist()) {
+            Mail::to($this->owner->email)->send(new NoEvents());
         }
     }
 }
