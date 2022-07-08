@@ -27,27 +27,27 @@ class Company extends Model
         return $query->withCount('promotions');
     }
 
-    public function events()
+    public function events(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Event::class);
     }
 
-    public function promotions()
+    public function promotions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Promotion::class);
     }
 
-    public function owner()
+    public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
 
-    public function menus()
+    public function menus(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Menu::class);
     }
 
-    public function city()
+    public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(City::class);
     }

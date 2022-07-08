@@ -26,7 +26,7 @@
             <div class="flex flex-wrap lg:space-x-4 space-y-4 lg:space-y-0 lg:flex-nowrap">
                 @foreach($menus as $menu)
                     <div class="w-full lg:w-1/2 bg-gray-200 rounded-lg shadow-lg p-2 space-y-2 p-5 ">
-                        <a href="{{route('category.index', ['company' => $company->id, 'menu' => $menu])}}">
+                        <a href="{{route('category.index', ['company' => $company, 'menu' => $menu])}}">
                             <div
                                 class="flex flex-wrap space-x-2 rounded-lg border-2 border-gray-200  items-center shadow-lg">
                                 <img class="rounded-lg w-10 h-10 m-1" src="{{$menu->menu_logo}}" alt="">
