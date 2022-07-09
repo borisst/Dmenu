@@ -10,16 +10,16 @@
             </div>
         </div>
 
-{{--        Category List--}}
+        {{--        Category List--}}
         <div class="container px-2 mx-auto flex flex-wrap">
             @foreach($categories as $category)
                 <div class="flex flex-row justify-left items-center w-full relative mb-2 bg-black">
-                    <div>
-                        <img class="object-fill" src="{{$category->image}}" alt="">
+                    <div class="w-full">
+                        <img style="width:125px; height:115px" class="object-contain" src="{{$category->image}}" alt="">
                     </div>
-                    <div class="pl-5 z-10 w-full">
+                    <div class="w-full">
                         <a href="{{route('products.welcome' ,['menu' => $menu->id ,'category' => $category->id])}}"
-                           class="text-orange-200 capitalize">{{$category->name}}</a>
+                           class="text-orange-300 capitalize">{{$category->name}}</a>
                     </div>
                 </div>
             @endforeach
