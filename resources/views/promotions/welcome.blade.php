@@ -14,17 +14,21 @@
                 <div class="container px-2 mx-auto flex flex-wrap">
 
                     <div class="flex flex-wrap w-full relative mb-2 bg-black">
-                        <p><img class="object-fill w-full" src="{{$promotion->image}}" alt=""/></p>
+                        <h1 style="transform: rotate(-38.49deg);"
+                            class="pt-10 absolute text-3xl text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            PROMO</h1>
+                        <img style="width:432px; height: 256px" class="object-contain" src="{{$promotion->image}}"
+                             alt=""/>
 
                         <div class="grid grid-flow-row-dense grid-cols-12">
 
-                        <div class="col-span-8">
-                            <h1 class="p-2 text-2xl text-orange-300  ">{{$promotion->name}}</h1>
-                            <p class="p-2 text-white">{{$promotion->date}}</p>
-                        </div>
-                        <div class="col-span-2">
-                        <p class="mt-4 p-2 text-right text-white text-2xl">{{$promotion->price}}Ден.</p>
-                        </div>
+                            <div class="col-span-8 p-5">
+                                <h1 class="text-2xl text-orange-300">{{$promotion->name}}</h1>
+                                <p class=" text-white ">{{$promotion->date->format('l')}}</p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="mt-4 p-2 text-right text-white text-2xl">{{$promotion->price}}Ден.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

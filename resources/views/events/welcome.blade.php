@@ -12,16 +12,12 @@
 
             @forelse($events as $event)
                 <div class="container px-2 mx-auto flex flex-wrap">
-
                     <div class="flex flex-wrap w-full relative mb-2 bg-black">
-                        <p><img class="object-fill w-full" src="{{asset('../images/' . $event->image)}}" alt=""/></p>
-
-                        <div class="text-center relative z-10 w-full">
-                            <h1 class="text-3xl text-orange-300  ">{{$event->name}}</h1>
-
-                            <p class="text-orange-300">{{$event->date}}</p>
+                        <img style="width:432px; height: 256px" class="object-contain" src="{{$event->image}}" alt=""/>
+                        <div class="text-center p-5 w-full">
+                            <h1 class="text-orange-300 text-3xl">{{$event->name}}</h1>
+                            <p class="text-orange-300">{{$event->date->format('l Y.m.d')}}</p>
                         </div>
-
                     </div>
                 </div>
 
